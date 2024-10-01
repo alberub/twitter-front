@@ -1,0 +1,341 @@
+.modal{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background: rgba( 0,  0,  0, 0.5);
+    z-index: 9999;
+}
+
+.hidden{
+    display: none;
+}
+
+.modal__profile{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 87vh;
+    top: calc( (100vh - 87vh) / 2  );
+    left: calc( ( 100vw - 40vw ) / 2 );
+    border-radius: 15px;
+    background: #FFFFFF;
+    border: 1px solid gray;
+    z-index: 999;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.modal__profile::-webkit-scrollbar{
+    width: 8px;
+}
+
+.modal__profile::-webkit-scrollbar-thumb{
+    background: #1d9bf0;
+    border-radius: 15px;
+}
+
+.modal__profile::-webkit-scrollbar-button{
+    color: black;
+}
+
+.modal__header{
+    display: flex;
+    width: inherit;
+    min-height: 53px;
+    background: #fff;
+    border-radius: 15px 15px 0 0;
+    padding: 0 16px;
+    width: inherit;
+    align-items: center;
+    position: fixed;
+    z-index: 999;
+}
+
+.iconbox__close{
+    width: 56px;
+    height: 53px;
+    display: flex;
+    align-items: center;
+}
+
+.fa-xmark{
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.fa-xmark:hover{
+    background: rgba(128, 128, 128, 0.226);
+}
+
+.edit{
+    text-align: left;
+}
+
+.modal__header--cta{
+    position: absolute;
+    right: 16px;
+    font-size: 13px;
+    padding: 7px 10px;
+    border-radius: 20px;
+    color: #fff;
+    background-color: black;
+    cursor: pointer;
+}
+
+/* ======================================================================================== */
+/* ======================================================================================== */
+
+.portrait{
+    position: relative;
+    width: 100%;
+    height: 27vh;
+    background: #000;
+    margin-top: 53px;
+}
+
+.portrait__labels{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.imgPort__picture{
+    position: relative;
+    width: 100%;
+    height: 27vh;
+    background: gray;
+}
+
+.bi-camera{
+    position: absolute;
+    font-size: 1.3rem;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    border-radius: 50px;
+    background: rgba(15, 20, 25, 0.75);
+    top: calc( 50% - 21px );
+    left: calc( 50% - 52px );
+    z-index: 5;
+    cursor: pointer;
+}
+
+.bi-camera, .bi-x-lg{
+    line-height: 42px;
+}
+
+.bi-x-lg{
+    position: absolute;
+    font-size: 1.3rem;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    border-radius: 50px;
+    background: rgba(15, 20, 25, 0.75);
+    top: calc( 50% - 21px );
+    right: calc( 50% - 52px );
+    z-index: 5;
+    cursor: pointer;
+}
+
+.profile{
+    position: relative;
+    transform: translateY(-50%);
+    height: 110px;
+    width: 100%;
+}
+
+.imgProfile{
+    position: relative;
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    left: 15px;
+    margin-bottom: 0;
+}
+
+.camera-profile.bi.bi-camera{
+    position: absolute;
+    font-size: 1.25rem;
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    text-align: center;
+    border-radius: 50px;
+    top: 33px;
+    left: 50px;
+    background: rgba(15, 20, 25, 0.75);
+    z-index: 9999;
+    cursor: pointer;
+}
+
+.camera-profile.bi.bi-camera{
+    line-height: 42px;
+}
+
+.modal__input--first{
+    position: relative;
+    transform: translateY(-50%);
+    height: 86px;
+    padding: 12px 16px;
+}
+
+.modal__input{
+    position: relative;
+    transform: translateY(-42px);
+    height: 84px;
+    padding: 12px 16px;
+}
+
+.modal__input--bio{
+    position: relative;
+    transform: translateY(-43px);
+    height: 124px;
+    padding: 12px 16px;
+}
+
+.textArea{
+    height: 60px;
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+    font-size: 17px;
+}
+
+.myModal{
+    border-radius: 3px;
+    border: 1px solid rgba( 128, 128, 128, 0.3);
+}
+
+.modal__input--name{
+    margin: 16px 0px 0px;
+    padding: 12px 8px 8px;
+}
+
+.modal__label{
+    position: absolute;
+    color: rgb(83, 100, 113);
+    color: var(--inactive-font);
+}
+
+.input__modal{
+    font-size: var(--big-font);
+}
+
+.miSpan{
+    position: absolute;
+    color: rgb(83, 100, 113);
+    font-size: var(--small-font);
+    color: var(--inactive-font);
+    top: 8px;
+    left: 8px;
+}
+
+.input__form{
+    font-size: 17px;
+}
+
+.is-active{
+    transition: .2s;
+    top: 10px;
+    font-size: 10px;
+    color: gray;
+    transform: translate(100%) scale(.5);
+}
+
+.modal__input--name input{
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+.haveValue{
+    font-size: 10px;
+    color: #1d9bf0;
+    top: 10px;
+    transition: .2s;
+}
+
+.camera-profile.bi.bi-camera:hover{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.bi:hover{
+    background: rgba(0, 0, 0, 0.5);
+}
+
+input[type="file"]{
+    display: none;
+}
+
+.divisor{
+    width: 100vw;
+    height: 200px;
+}
+
+
+/* ========================================================================= */
+
+.mobilarrow{
+    width: 56px;
+    height: 53px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 50%;
+    text-align: start;
+    line-height: 53px;
+    display: none;
+}
+
+@media screen and ( max-width: 500px ) {
+
+    .modal__profile{
+        position: relative;
+        width: 100vw;
+        min-height: 100vh;
+        top: 0;
+        left: 0;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+    } 
+
+    .portrait{
+        width: 100vw;
+        height: 19vh;
+    }
+    
+    .imgPort__picture{
+        width: 100vw;
+        height: 100%;
+    }
+
+    .fa-xmark{
+        display: none;
+    }
+
+    .mobilarrow{
+        display: block;
+    }
+
+    .iconbox__close{
+        display: none;
+    }
+
+}

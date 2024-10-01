@@ -1,0 +1,6 @@
+@media screen and ( max-width: 500px ) {
+    .space__bottom{
+        width: inherit;
+        height: 53px;
+    }
+}

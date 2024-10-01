@@ -1,0 +1,30 @@
+<ng-container *ngIf="modalService.modalDelete">
+
+    <section  class="modal">
+
+        <div class="modal__small">
+            
+            <h1>Delete Tweet?</h1>
+            <p>This can’t be undone and it will be removed from your profile, the timeline 
+            of any accounts that follow you, and from Twitter search results.</p>
+            
+            <div class="buttons">
+                            
+                <button (click)="deleteTweet()"
+                        class="button__up" 
+                        type="button">
+                        Delete
+                </button>
+
+                <button class="button__down" 
+                        type="button"
+                        (click)="modalService.closeModalDelete()">                    
+                        Cancel
+                </button>
+                
+            </div>
+        </div>
+
+    </section>
+
+</ng-container>

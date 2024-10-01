@@ -1,0 +1,17 @@
+<ng-container *ngIf="!modalService.modalEmoji" class="emoji__modal">
+
+    <section class="emoji" id="modalEmoji">   
+
+        <emoji-mart set="twitter" 
+                    title=""
+                    emo
+                    emoji="wave"
+                    (emojiClick)="addEmoji( $event )"
+                    class="emoji__card"
+                    [style.top]="height">
+        
+        </emoji-mart>
+    
+    </section>
+
+</ng-container>  

@@ -1,0 +1,67 @@
+<section class="modal" 
+         [class.hidden]="modalService.modalHover" 
+         *ngIf="userModal"
+         id="hoverModal"
+         #modalHoverModalHover>
+
+    <div class="modal__hover" [style.top]="modalY" [style.left]="modalX">
+        
+        <div class="modalHover__head">
+
+            <img [src]="userModal.imagenUrl" alt="" class="img">
+
+            <ng-container *ngIf="userModal.uid !== myUser.uid">
+
+                <a *ngIf="!IamAFollower" 
+                class="modal__cta"
+                (click)="newFollow( userModal )">
+
+                Follow 
+                
+                </a>
+
+                <a *ngIf="IamAFollower" 
+                class="modal__cta-following"
+                (click)="deleteFollowing( userModal )"
+                (mouseover)="overFollowing( 'Unfollow' )"
+                (mouseleave)="overFollowing( 'Following' )"> 
+
+                {{ followHover }} 
+                
+                </a>
+
+            </ng-container>
+
+        </div>
+
+        <div>
+
+            <a [routerLink]="['/', userModal.username ]" class="modal__names">{{ userModal.firstName }} {{ userModal.lastName }} </a>
+            <a [routerLink]="['/', userModal.username ]" class="modal__username"> @{{ userModal.username }} </a>
+            <a href="#" class="modal__bio"> {{ userModal.bio }} </a>
+            
+        </div>
+
+        <div class="follows__info">
+
+            <p class="followings">{{ userModal.followings!.length }}</p><span>Followings</span>
+            <p class="followers">{{ userModal.followers!.length }}</p><span>Followers</span>
+
+        </div>
+
+        <!-- <div class="follow__suggest">
+            <div class="follow__pictures">
+                <img src="" alt="">
+                <img src="" alt="">
+                <img src="" alt="">
+            </div>
+
+            <div class="follows__info--texts">
+                <p>Followed by Alberto, Uribe, Roberto y otros 8 que tu sigues.</p>
+            </div>
+
+        </div> -->
+
+    </div>
+
+</section>

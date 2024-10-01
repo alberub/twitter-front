@@ -1,0 +1,290 @@
+.hidden{
+    display: none;
+}
+
+.modal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba( 0,  0,  0, 0.5);
+    z-index: 999;
+}
+
+.modal__reply{
+    position: fixed;
+    display: flex;
+    flex-direction: column;     
+    width: 599px;
+    max-height: 90vh;
+    border-radius: 15px;
+    top: 5vh;
+    left: calc( ( 100vw - 599px ) / 2 );
+    background: #FFFFFF;
+    overflow-y: auto;
+    padding: 0 16px;
+    z-index: 999;
+}
+
+.modal__reply::-webkit-scrollbar{
+    display: none;
+}
+
+.close__cta{
+    display: flex;
+    width: 35vw;
+    min-height: 53px;
+    align-items: center;
+    position: fixed;
+    z-index: 2;
+    background: #fff;    
+}
+
+.modal__iconbox{
+    width: 34px;
+    height: 34px;
+}
+
+.bi-x-lg{
+    display: inline-block;
+    font-size: 1rem;
+    width: 30px;
+    height: 30px;
+    color: #000;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.bi-x-lg{
+    line-height: 30px;
+}
+
+.bi-x-lg:hover{
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.modal__body{
+    display: flex;
+    padding: 16px 0;
+    margin-top: 53px;
+}
+
+.user__picture{
+    width: 48px;
+    height: auto;
+    margin-right: 12px;
+}
+
+.divider{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.reply__indicator{
+    position: relative;
+    width: 2px;
+    background: rgb(128, 128, 128, .3);
+    height: calc( 100% - 40px );
+}
+
+.img__reply{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.modal__body--texts{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between  ;
+}
+
+.modal__data--user{
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 12px 0;
+}
+
+.modal__user{
+    display: flex;
+    height: 20px;
+}
+
+.modal__user-name{
+    font-size: var(--medium-font);
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.modal__user-username{
+    font-size: var(--medium-font);
+    color: var(--inactive-font);
+}
+
+.msg{
+    width: 100%;
+    height: auto;
+}
+
+.tweet__msg{
+    color: var(--other-font);
+    font-size: var(--medium-font);
+}
+
+.tag{
+    font-size: var(--medium-font);
+    padding: 4px 0 12px 0;
+    color: var(--inactive-font);
+}
+
+.tag span{
+    font-size: var(--medium-font);
+    color: rgb(29, 155, 240);
+}
+
+.modal__reply-cta{
+    display: flex;
+    width: 100%;
+}
+
+.modal__reply-cta img{
+    padding: 4px 0 0 0;
+    margin-right: 12px;
+}
+
+.reply{
+    width: 100%;
+}
+
+.container__textArea{
+    width: 100%;
+    min-height: 98px;
+    padding: 12px 0;
+}
+
+textarea{
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    font-size: var(--menu-font);
+    font-family: 'Lato', sans-serif;
+    resize: none;
+    min-height: 28px;
+    width: 100%;
+}
+
+textarea::-webkit-scrollbar{
+    width: 0px;
+}
+
+.modal__picture{
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.bi-x-circle-fill{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 34px;
+    color: rgba(15, 20, 25, 0.75);
+    cursor: pointer;    
+}
+
+.modal__img{
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+.reply__actions{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+    height: 48px;
+}
+
+.icon-bi{
+    display: inline-block;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    color: rgb(29, 155, 240);
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.icon-bi{
+    line-height: 30px;
+}
+
+.icon-bi:hover{
+    background: #E8F5FD;
+}
+
+.uil-analytics{
+    transform: rotate(90deg);
+}
+
+.reply__actions button{
+    width: 70px;
+    height: 36px;
+    color: #fff;
+    font-size: var(--medium-font);
+    border-radius: 20px;
+    border: none;
+    background: #1D9BF0;
+    cursor: pointer;
+}
+
+/* ============================================================================== */
+
+.modal__iconboxmobile{
+    display: none;
+}
+
+@media screen and ( max-width: 700px ) {
+
+    .modal__reply{
+        min-width: 100vh;
+        min-height: 100vh;
+        top: 0;
+        left: 0;
+        position: fixed;
+        border-radius: 0;
+        padding: 0;
+    }
+
+    .modal__iconbox{
+        display: none;
+    }
+
+    .modal__body{
+        width: 100vw;
+        padding: 0 16px;
+    }
+
+    .modal__iconboxmobile{
+        display: block;
+        padding: 0 16px;
+    }
+
+    .modal__reply-cta{
+        width: 100vw;
+        padding: 0 16px;
+    }
+
+}

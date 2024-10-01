@@ -1,0 +1,36 @@
+<ng-container *ngIf="activeSpinner">
+
+    <div class="spinner"></div>
+
+</ng-container>
+
+<ng-container *ngIf="!noLikes">
+    
+    <div *ngFor="let item of data">
+        
+        <app-tweet-card [tweet]="item"></app-tweet-card>
+        
+    </div>
+
+    <div class="cards__profile"></div>
+    
+</ng-container>
+
+<ng-container *ngIf="noLikes && data.length === 0">
+
+    <div class="noLikes">
+        
+        <h1 class="noLikesh1">You don’t have any likes yet</h1>
+        <h2 class="noLikesh2">Tap the heart on any Tweet to show it some love. When you do, it’ll show up here.</h2>
+        
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="data.length >= 0">
+
+    <div class="space__bottom-likes"></div>
+
+</ng-container>
+
+

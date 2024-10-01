@@ -1,0 +1,498 @@
+<section class="explore">
+
+    <article class="explore__left">    
+
+        <header class="explore__header">
+
+            <div class="search">
+                <div class="search__iconbox">
+                    <i class="bi bi-search"></i>
+                </div>
+                <input type="text" 
+                    placeholder="Search Twitter"
+                    class="explore__input">
+            </div>
+            
+            <div class="settings__iconbox">
+                <i class="bi bi-gear"></i>
+            </div>
+    
+        </header>
+
+        <ng-container *ngIf="!searching">
+        
+            <header class="explore__header-mobile">
+
+                <div class="explore__header-sidebar">
+                    <img [src]="user.img! | imagen:'users'" 
+                         alt="" 
+                         class="sidebar__cta"
+                         (click)="actionSidebarMobile()">
+                </div>
+
+                <div class="explore__search-mobile" (click)="search()">
+
+                    <div class="search__mobile">
+                        <input type="text" class="input__mobile" placeholder="Search User (alberto)">
+                        <div class="iconbox__mobile">
+                            <i class="icon-mobile bi bi-search"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="settings__iconbox">
+
+                    <i class="bi bi-gear"></i>
+
+                </div>
+
+            </header>
+        
+        </ng-container>
+
+        <ng-container *ngIf="searching">
+        
+            <header class="explore__header-mobile">
+
+                <div class="explore__header-return" (click)="search()">
+                    <i class="bi bi-arrow-left"></i>
+                </div>
+
+                <div class="explore__search-mobile">
+
+                    <form class="search__mobile" [formGroup]="searchForm">
+                        <input type="text" 
+                               class="input__mobile"
+                               formControlName="term"
+                               placeholder="Search Twitter (alberto)"
+                               autocomplete="off"
+                               id="searchUserMobile"
+                               [ngClass]="{'searching': searching }">
+                        <div class="iconbox__mobile">
+                            <i [ngClass]="{'searching__icon': searching }" class="icon-mobile bi bi-search"></i>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="settings__iconbox">
+
+                    <i class="bi bi-gear"></i>
+
+                </div>
+
+            </header>
+        
+        </ng-container>
+        
+        <ng-container *ngIf="searching">
+            <aside class="modal__search-mobile">
+
+                <ng-container *ngIf="usersFound.length === 0">
+                    <span class="without__results">Try searching for people, topics, or keywords</span>
+                </ng-container>
+
+                <ng-container *ngIf="usersFound.length > 0">                    
+                    <div class="card" *ngFor="let user of usersFound">
+                        <div class="card__user" [routerLink]="['/',user.username]">
+                            <div class="card__picture">
+                                <img [src]="user.img! | imagen:'users'" alt="" class="card__img">
+                            </div>
+                            <div class="card__userinfo">
+                                <span class="user__firstname"> {{ user.firstName }} </span>
+                                <span class="user__username"> @{{ user.username }} </span>                                
+                                <span class="user__bio"> {{ user.bio }} </span>
+                            </div>
+                        </div>                        
+                    </div>
+                </ng-container>                
+
+            </aside>            
+        </ng-container>        
+
+        <div class="explore__tabs">
+
+            <div class="explore__tab" (click)="setTitle( 'for you' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'for you' }"> For you </a>        
+
+            </div>
+
+            <div class="explore__tab" (click)="setTitle( 'trend' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'trend' }"> Trending </a>        
+
+            </div>
+
+            <div class="explore__tab" (click)="setTitle( 'cv19' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'cv19' }"> COVID-19 </a>
+
+            </div>
+
+            <div class="explore__tab" (click)="setTitle( 'news' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'news' }"> News </a>
+
+            </div>
+
+            <div class="explore__tab" (click)="setTitle( 'sports' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'sports' }"> Sports </a>
+
+            </div>
+
+            <div class="explore__tab" (click)="setTitle( 'entertainment' )">
+
+                <a class="exp__cta" [ngClass]="{'route__underline': title === 'entertainment' }"> Entertainment </a>
+
+            </div>
+
+        </div>
+
+        <div class="news__section">
+
+            <div class="headlines">
+
+                <div class="headline__picture" *ngFor="let item of newsService.newTechnologyResult">
+
+                    <img [src]="item.urlToImage" alt="" class="headline__img">
+                    <div class="img__gradient"></div>
+
+                    <div class="headline__texts">
+
+                        <span class="theme"> Technologies · LIVE </span>
+                        <span class="title"> {{ item.title }}. </span>
+                        
+                    </div>
+
+                    <div class="headline__texts-responsive">
+
+                        <span class="theme"> Technologies · LIVE </span>
+                        <span class="title"> {{ item.title | slice:0:150 }}
+                                            {{ item.title.length > 150 ? '...' : '' }} 
+                        </span>
+                        
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <article class="card__sports">
+
+                <header class="sports__headline">
+
+                    <span class="sports__title"> UEFA Champios League </span>
+                    <span class="sports__date"> Today 2:00 PM </span>
+
+                </header>
+
+                <div class="sports__match">
+                
+                    <div class="sports__team">
+                        
+                        <div class="sports__picture">
+
+                            <img src="https://www.realmadrid.com/StaticFiles/RealMadridResponsive/images/static/og-image.png" alt="" class="sports__img">
+
+                        </div>
+
+                        <div class="sports__team-name">
+
+                            <span class="team__name-one"> Real Madrid CF </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="sports__team-two">
+                        
+                        <div class="sports__picture">
+
+                            <img src="http://as01.epimg.net/img/comunes/fotos/fichas/equipos/large/65.png" alt="" class="sports__img-two">
+
+                        </div>
+
+                        <div class="sports__team-name">
+
+                            <span class="team__name-two"> Liverpool FC </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <div class="card__trending">
+
+                <div class="card__left">       
+
+                    <div class="trending__topic">
+                        
+                        <span class="topic"> Gaming · Trending </span>
+                        
+                    </div>
+                    
+                    <div class="trending__hashtag">
+                        
+                        <span class="hashtag"> #PlayStation </span>
+                        
+                    </div>
+                    
+                    <div class="trending__count">
+                        
+                        <span class="count"> 1750 Tweets </span>
+                        
+                    </div>
+
+                </div>
+
+                <div class="card__right">
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+            </div>
+
+            <div class="topic__recommendation">
+
+                <div class="topic">
+
+                    <div class="topic__icon">
+
+                        <div class="topic__iconbox">
+
+                            <i class="bi bi-chat-text"></i>
+
+                        </div>
+
+                    </div>
+
+                    <div class="topic__texts">
+
+                        <span class="topic__title"> Tech industry </span>
+                        <span class="topic__subtitle"> Technology </span>
+
+                    </div>
+
+                </div>
+
+                <div class="topic__button">
+
+                    <a class="topic__cta"> following </a>
+
+                </div>
+
+            </div>
+
+            <div class="topic__showmore">
+
+                <span class="showmore__text"> Show more </span>
+
+            </div>
+
+            <div class="card__trending">
+
+                <div class="card__left">       
+
+                    <div class="trending__topic">
+                        
+                        <span class="topic"> Science · Trending </span>
+                        
+                    </div>
+                    
+                    <div class="trending__hashtag">
+                        
+                        <span class="hashtag"> #BlackHole </span>
+                        
+                    </div>
+                    
+                    <div class="trending__count">
+                        
+                        <span class="count"> 4450 Tweets </span>
+                        
+                    </div>
+
+                </div>
+
+                <div class="card__right">
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+            </div>
+
+        </div>            
+
+    </article>
+
+    <aside class="explore__right">
+
+        <aside class="who__follow">
+
+            <span class="who__like">Who to follow</span>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">
+
+                    <img src="https://www.biografiasyvidas.com/monografia/newton/fotos/newton_joven.jpg" 
+                    alt=""
+                    class="recomendation__img">
+                    
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Bryan Rios </span>
+                        <span class="recomendation__username"> @Bryan </span>
+
+                    </div>
+
+                    <a class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">                    
+                    <img src="https://www.cladera.org/biografias/pics/cientificos/bohr.jpg" 
+                    alt=""
+                    class="recomendation__img">
+
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Alberto Uribe </span>
+                        <span class="recomendation__username"> @AlUribe </span>
+
+                    </div>
+
+                    <a class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <span class="show"> Show more </span>
+
+        </aside>
+
+        <!-- <aside class="whats__happening">
+
+            <span class="whats__title"> Whats's happening </span>
+
+            <article class="card__new" *ngFor="let item of newService.newScienceResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Science · 3 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> Tesla Motors </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> FinTech </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+                        
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <article class="card__new" *ngFor="let item of newService.newTechnologyResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Technology · 2 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </aside>  -->
+
+    </aside>
+    
+</section>
+
+<app-sidebar-mobile></app-sidebar-mobile>

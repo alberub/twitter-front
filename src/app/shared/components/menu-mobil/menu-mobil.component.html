@@ -1,0 +1,69 @@
+<div class="menu__mobil" id="menumobil">
+
+    <div class="menu__mobil-links">
+
+        <div class="link" *ngFor="let item of mainMenuMobile.defaultOptions">
+
+                    <a class="menu__links" 
+                        #rla="routerLinkActive" 
+                        [routerLinkActiveOptions]="{ exact: true }" 
+                        [routerLinkActive]="'active'"
+                        [routerLink]="item.router">
+
+                        <ng-container *ngIf="item.name === 'Messages' && 
+                                          !rla.isActive && 
+                                          counterMessages.length > 0">
+
+                            <div class="icon__newMessage"> <span class="counter"> {{ counterMessages.length }} </span> </div>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="item.name === 'Notifications' && 
+                                            !rla.isActive &&
+                                            counterNotifications !== 0">
+
+                            <div class="icon__newMessage"> <span class="counter"> {{ counterNotifications }} </span> </div>
+
+                        </ng-container>
+                    
+                        <ng-container *ngIf="!rla.isActive">
+
+                            <i class="icon__active" [ngClass]="[ item.icon ]"></i>
+
+                        </ng-container>
+                    
+                        <ng-container *ngIf="rla.isActive">
+
+                            <i class="icon__deactive" [ngClass]="[ item.icon__active ]"></i>
+
+                        </ng-container>                        
+                    
+                    </a>        
+
+        </div>
+
+    </div>
+
+</div>
+
+<ng-container *ngIf="!isRouteMessage">
+
+    <div class="icon__svg" id="newMessageMobil">
+        
+        <img src="../../../../assets/g13662.png" alt="" 
+        class="svg"
+        (click)="openModalNew()">
+        
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="isRouteMessage">
+
+    <div class="icon__svg" id="newMessageMobil">
+
+        <i class="bi bi-envelope-plus" (click)="openModalNewMessage()"></i>
+        
+    </div>
+
+</ng-container>

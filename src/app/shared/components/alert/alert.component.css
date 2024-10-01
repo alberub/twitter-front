@@ -1,0 +1,46 @@
+.alert{
+    max-width: 100vw;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.alert__label{
+    position: fixed;
+    bottom: 0;
+    width: max-content;
+    height: 44px;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    padding: 12px;
+    background: var(--primary-color);
+    z-index: 999;
+}
+
+.message{
+    font-size: var(--medium-font);
+    color: var(--color-text);
+    font-weight: 400;
+}
+
+.hidden{
+    display: none;
+}
+
+@media screen and ( max-width: 500px ) {
+
+    .alert__label{
+        padding: 12px;
+        border-radius: 0;
+        bottom: 10px;
+        width: 100vw;
+        text-align: center;
+    }
+
+    .message{
+        font-size: var(--medium-font);
+        font-weight: 400;
+    }
+
+}

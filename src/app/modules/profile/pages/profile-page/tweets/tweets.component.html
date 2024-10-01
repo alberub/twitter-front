@@ -1,0 +1,19 @@
+<ng-container *ngIf="activeSpinner">
+
+    <div class="spinner"></div>
+
+</ng-container>
+    
+<ng-container *ngFor="let item of data">
+
+    <app-tweet-card [tweet]="item"></app-tweet-card>
+    
+</ng-container>
+
+<ng-container *ngIf="data.length > 0">
+
+    <div class="space__bottom"></div>
+
+</ng-container>
+
+    

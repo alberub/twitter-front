@@ -1,0 +1,35 @@
+<ng-container *ngIf="activeSpinner">
+
+    <div class="spinner"></div>
+
+</ng-container>
+
+<ng-container *ngIf="!noLikes">
+    
+    <div *ngFor="let item of data">
+        
+        <app-tweet-card [tweet]="item"></app-tweet-card>
+        
+    </div>
+
+    <div class="cards__profile"></div>
+    
+</ng-container>
+
+<ng-container *ngIf="data.length === 0">
+
+    <div class="no__media">
+        
+        <img class="no__media-img" src="https://abs.twimg.com/sticky/illustrations/empty-states/masked-doll-head-with-camera-400x200.v1.png" alt="">        
+        <h1 class="noLikesh1"> hasn’t Tweeted media</h1>
+        <h2 class="noLikesh2"> Once they do, those Tweets will show up here. </h2>
+        
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="data.length >= 0">
+
+    <div class="space__bottom-likes"></div>
+
+</ng-container>

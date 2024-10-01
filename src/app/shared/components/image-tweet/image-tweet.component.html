@@ -1,0 +1,221 @@
+<article class="tweet__float" [class.hidden]="modalService.modalImageTweet">
+    <!-- [style.top]="getHeight" -->
+
+    <div class="tweet__modal">       
+        
+        <div class="tweet__modal-media">
+
+            <div class="tweet__media">
+                
+                <div class="iconbox__close" (click)="closeModal()">
+
+                    <i class="bi bi-x"></i>
+
+                </div>
+
+                <div class="tweet__picture">
+
+                    <img [src]="tweet.img" alt="" class="tweet__img">
+
+                </div>
+                
+            </div>
+            
+            <div class="tweet__reactions">
+
+                <div class="reactions">
+
+                    <i class="icons bi bi-chat"></i>
+
+                    <a [ngClass]="{'fa-retweeted': retweeted === true }" 
+                        class="icons fa-solid fa-retweet"
+                       (click)="retweet( tweet._id )"></a>
+
+                    <i class="icons bi bi-heart" 
+                       [ngClass]="{'bi bi-heart-fill': tweet.liked }"
+                       (click)="likeTweet( tweet._id )"></i>
+
+                    <i class="icons bi bi-box-arrow-up"></i>
+
+                </div>
+                
+            </div>
+
+        </div>
+
+        <form class="tweet__modal-data">
+            
+            <div class="tweet__data">
+
+                <div class="section__space"></div>
+
+                <div class="tweet__userinfo">
+
+                    <div class="userinfo__picture">
+
+                        <img [src]="tweet.userId.img" 
+                             appWithoutImage
+                             alt="" 
+                             class="userinfo__img">
+
+                    </div>
+
+                    <div class="userinfo__data">
+
+                        <div class="userinfo__texts">
+
+                            <span class="userinfo__name"
+                                  (click)="goProfile( tweet.userId.username )">
+                                {{ tweet.userId.firstName }}
+                            </span>
+
+                            <span class="userinfo__username"> @{{ tweet.userId.username }} </span>
+
+                        </div>
+
+                        <div class="tweet__button">
+
+                            <a class="bi bi-three-dots"></a>                            
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="tweet__body">
+
+                    <span class="tweet__message"> {{ tweet.message}} </span>
+
+                    <div class="tweet__dates">
+
+                        <!-- 2:04 PM · May 25, 2022 -->
+                        <span class="date"> {{ tweet.createdAt | date: 'h:mm a' }} ·</span>
+                        <span class="date"> {{ tweet.createdAt | date: 'MMM d, y ' }} </span>
+
+                    </div>
+
+                    <div class="tweet__reactionscount">
+
+                        <span class="reaction__bold"> {{ tweet.retweets!.length }} <span class="reaction__desc"> Retweets </span> </span>
+                        <span class="reaction__bold"> {{ tweet.likes!.length }} <span class="reaction__desc"> Likes </span> </span>
+
+                    </div>
+
+                    <div class="tweet__react">
+
+                        <a class="icon bi bi-chat"></a>
+
+                        <a class="icon fa-solid fa-retweet"
+                           [ngClass]="{'fa-retweeted': retweeted }" 
+                           (click)="retweet( tweet._id )"></a>
+
+                        <a class="icon bi bi-heart" 
+                           [ngClass]="{'bi bi-heart-fill': tweet.liked }"
+                           (click)="likeTweet( tweet._id )"></a>
+
+                        <a class="icon bi bi-box-arrow-up"></a>
+
+                    </div>                                                       
+
+                </div>                
+
+            </div>
+
+            <!-- ================================ ANSWER SECTION BEFORE ========================== -->
+
+            <div class="tweet__reply" 
+                 *ngIf="!clickInReplyArea">
+
+                <div class="reply__container">
+        
+                    <div class="reply__picture">
+                        <img [src]="user.img! | imagen:'users'" class="reply__img">
+                    </div>
+                    
+                    <div class="reply__texts">
+                        <input class="reply__input" (click)="reply()" type="text" placeholder="Tweet your reply">
+                        <button class="reply__cta-disable">Reply</button>
+                    </div>
+                    
+                </div>
+        
+            </div>
+
+            <!-- ================================ ANSWER SECTION AFTER =========================== -->
+
+            <div class="tweet__reply--click animate__animated animate__fadeIn" 
+                 *ngIf="clickInReplyArea">
+
+                <div class="reply__container--click">
+        
+                    <div class="reply__picture">
+                        <img [src]="user.img! | imagen:'users'" class="reply__img">
+                    </div>
+                    
+                    <form class="reply__actions" [formGroup]="replyForm" (ngSubmit)="createReply()">
+        
+                        <div class="reply__to">
+                            <p class="replying">Replying to <span class="link"> @{{ tweet.userId.username }} </span></p>
+                        </div>
+                        
+                        <div class="reply__texts">
+        
+                            <textarea placeholder="Tweet your reply"
+                                      class="textArea__placeholder" 
+                                      #textArea2
+                                      id="setFocus"
+                                      formControlName="message">
+        
+                            </textarea>
+        
+                        </div>
+        
+                        <div class="files" *ngIf="imgTemp">
+        
+                            <div class="iconbox__clearimg">
+        
+                                <i class="bi bi-x" (click)="clearImgTemp()"></i>
+        
+                            </div>
+        
+                            <img *ngIf="imgTemp" [src]="imgTemp" alt="" class="image__reply">
+        
+                        </div>
+                        
+                        <div class="reply__button">
+        
+                            <div class="reply__icons">                        
+        
+                                <input type="file" id="fileReplyFloat" 
+                                       (change)="changeImg( $any($event).target.files[0] )">
+        
+                                <label for="fileReplyFloat" class="icon-bis bi bi-image"></label>
+        
+                                <label class="icon-bis bi bi-filetype-gif"></label>
+                                <label class="icon-bis bi bi-emoji-smile"></label>
+                                <label class="icon-bis bi bi-geo-alt"></label>
+        
+                            </div>
+        
+                            <button type="submit" [disabled]="replyForm.invalid && !imgTemp" class="reply__cta">Reply</button>
+        
+                        </div>
+        
+                    </form>
+                    
+                </div>
+        
+            </div>   
+
+            <ng-container *ngFor="let item of replies">
+
+                <app-tweet-card [tweet]="item" [ngClass]="{'scrollBar': replies.length > 3 }"></app-tweet-card>
+
+            </ng-container>  
+
+        </form>
+
+    </div>
+
+</article>

@@ -1,0 +1,68 @@
+<section class="modal" [class.hidden]="modalService.modalSearch">
+
+    <aside class="modal__search">
+
+        <ng-container *ngIf="foundResult">
+
+            <div class="trysearch">
+                <p class="trysearch__text">Try searching for people, topics, or keywords</p>
+            </div>
+
+        </ng-container>
+
+        <ng-container *ngFor="let user of found">        
+        
+            <div class="found__profile animate__animated animate__fadeIn"                  
+                [routerLink]="['/',user.username ]">
+
+                <div class="found__profile--picture">
+                    <img [src]="user.img! | imagen:'users'" class="profile__img" alt="">
+                </div>
+
+                <div class="found__profile--texts">
+                    <h1 class="names"> {{ user.firstName }} {{ user.lastName }} </h1>
+                    <p class="user__info"> @{{ user.username }} </p>
+                    <p class="user__info" *ngIf="user.bio"> {{ user.bio | slice:0:32 }}{{ ( user.bio!.length > 32) ? '...' : '' }} </p>
+                </div>
+
+            </div>
+
+        </ng-container>
+
+    </aside>
+
+</section>
+
+
+
+
+
+
+
+
+<!-- <div class="suggest">
+
+        <div class="icon-search">
+            <i class="icon bi bi-search"></i>
+        </div>
+        <span class="suggest__text">#Science</span>
+
+    </div>
+
+    <div class="suggest">
+
+        <div class="icon-search">
+            <i class="icon bi bi-search"></i>
+        </div>
+        <span class="suggest__text">#Science</span>
+
+    </div>
+
+    <div class="suggest">
+
+        <div class="icon-search">
+            <i class="icon bi bi-search"></i>
+        </div>
+        <span class="suggest__text">#Science</span>
+
+    </div> -->

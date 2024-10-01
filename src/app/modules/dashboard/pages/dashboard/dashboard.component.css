@@ -1,0 +1,30 @@
+.dashboard{
+    min-height: 100.1vh;
+}
+
+.home-wrapper{
+    padding: 0 0 0 275px;
+    min-height: 100vh;
+}
+
+.wrapper{
+    width: auto;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+@media screen and ( max-width: 500px){
+
+    .wrapper{
+        width: 100vw;
+        overflow-x: hidden;
+    }
+
+    #sidebar{
+        display: none;
+    }
+
+    .home-wrapper{
+        padding: 0;
+    }
+}

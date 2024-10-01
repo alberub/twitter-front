@@ -1,0 +1,333 @@
+<ng-container *ngIf="loadingNewTweet">
+    <div class="loader"></div>        
+</ng-container>
+
+<div class="post__tweet">    
+                    
+    <div class="post__picture">
+        <img [src]="usuario.img"
+             appWithoutImage 
+             class="post__img"
+             [routerLink]="['/profile']">
+    </div>    
+
+    <ng-container *ngIf="normalTweet">
+
+        <div class="post" #post>
+            <form [formGroup]="tweetForm" (ngSubmit)="newTweet()">
+            <textarea formControlName="tweet" 
+                      minlength="1"                       
+                      #textArea                      
+                      [ngClass]="areaHeight" 
+                      placeholder="What's happening?">
+                      
+            </textarea>
+            
+            <figure class="tweet__picture" *ngIf="imgTemp" id="textArea2">
+                
+                <a (click)="closeImg()" class="fa-solid fa-xmark"></a>
+                
+                <img *ngIf="imgTemp" [src]="imgTemp" class="tweet__img">
+                
+            </figure>
+            
+            <a *ngIf="privacity" class="post__private"> <i class="fa-solid fa-earth-americas"></i> Everyone can reply</a>
+                        
+            <div class="options__cta">
+                <!-- accept="image/*" -->
+                <div class="icons">
+                    
+                    <input type="file" id="file" accept="image/*" (change)="changeImg( $any($event).target.files[0] )">
+                    <label for="file" class="icon-bi bi bi-image"></label>
+
+                    <label for="file" class="icon-bi bi bi-filetype-gif" accept="gif"></label>
+
+                    <!-- <label class="icon-bi bi bi-bar-chart" (click)="createPoll()"></label> -->
+                    <label class="icon-bi uil uil-analytics" (click)="createPoll()"></label>                    
+
+                    <label class="icon-bi bi bi-emoji-smile" (click)="openModalEmoji()"></label>
+
+                    <label class="disabled__function icon-bi bi bi-calendar2"></label>                                        
+
+                    <label class="disabled__function icon-bi bi bi-geo-alt"></label>
+
+                </div>
+                
+                <div class="settings__new">
+
+                    <!-- <div class="spinners" *ngIf="privacity"></div> -->
+                    <div class="progress__counter">
+                        <ng-container *ngIf="privacity && ( countCharacters < 260 )">                        
+                            <div role="progressbar" 
+                                aria-valuenow="0" 
+                                aria-valuemin="0" 
+                                aria-valuemax="100" 
+                                [style]="setValueProgress">     
+                            </div>
+                        </ng-container>
+    
+                        <ng-container *ngIf="privacity && ( countCharacters > 259 && countCharacters < 281 )">
+                            <div class="progress">
+                                <div role="progressbar2" 
+                                    aria-valuenow="0" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100" 
+                                    [style]="setValueProgress"
+                                    class="animate__animated animate__zoomIn">
+                                </div>
+                                <aside class="counter"> {{ maximumLengthCounter }} </aside>
+                            </div>
+                        </ng-container>
+
+                        <ng-container *ngIf="privacity && ( countCharacters > 280 )">
+                            <div class="progress">
+                                <div role="progressbar3" 
+                                    aria-valuenow="0" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100" 
+                                    [style]="setValueProgress">
+                                </div>
+                                <aside class="counter"> {{ maximumLengthCounter }} </aside>
+                            </div>
+                        </ng-container>
+
+                    </div>
+
+                    <div class="divisor" *ngIf="privacity">
+                        <div class="line"></div>
+                    </div>
+                    
+                    <div class="add__thread" *ngIf="privacity">
+                        <i class="bi bi-plus"></i>
+                    </div>
+
+                    <button type="submit" 
+                            class="tweet__cta" 
+                            [disabled]="tweetForm.invalid">
+                            
+                        Tweet
+
+                    </button>
+
+                </div>
+                
+            </div>            
+
+        </form>
+        </div>
+
+    </ng-container>
+
+    <!-- Section Poll =================================================================================== -->
+
+    <ng-container *ngIf="!normalTweet">
+
+        <section class="post">
+
+            <form [formGroup]="tweetForm" (ngSubmit)="newTweet()">
+                
+                <textarea formControlName="tweet" 
+                          min="1" 
+                          #textArea 
+                          placeholder="Ask a question...">
+                
+                </textarea>
+            
+            <section class="new__poll">
+                
+                <!-- (click)="newTweet()"   -->
+                <form [formGroup]="tweetForm" 
+                      class="poll__choices">
+
+                    <div class="set__options"
+                         id="setOptions">                    
+
+                         <div class="input__choice1">
+
+                            <input type="text"
+                                   class="input__choicenew"
+                                   formControlName="option1"
+                                   id="inputCH1"
+                                   maxlength="25"
+                                   autocomplete="off"
+                                   placeholder=" "
+                                   (click)="showCount( 'input1' )">
+
+                            <label for="inputCH1" class="labelnew"> Choice 1 </label>
+
+                            <span class="count"> {{ countChar }} / 25 </span>
+
+                            <!-- <ng-container *ngIf="showCharactersCount">
+
+
+                            </ng-container> -->
+                            
+
+                         </div>        
+                         
+                         <div class="input__choice2">
+
+                            <input type="text"
+                                   class="input__choicenew"
+                                   formControlName="option2"
+                                   id="inputCH2"
+                                   maxlength="25"
+                                   autocomplete="off"
+                                   placeholder=" "
+                                   (click)="showCount( 'input2' )">
+
+                            <label for="inputCH2" class="labelnew"> Choice 2 </label>
+
+                            <span class="count"> {{ countChar2 }} / 25 </span>
+
+                         </div>   
+                         
+                    </div>
+
+                    <figure class="add__icon">
+
+                        <i class="bi bi-plus-lg"></i>
+
+                    </figure>
+
+
+                </form>
+
+                <form class="poll__length">
+                    
+                    <div class="poll__subtitle">
+                        <h2 class="subtitle">Poll length</h2>
+                    </div>
+
+                    <div class="poll__dates">
+
+                        <div class="days">
+
+                            <div class="select">
+                                                                
+                                <label class="time__label">Days</label>
+                                <select id="myS" 
+                                        class="select__time"
+                                        formControlName="days">
+                                    
+                                    <option value="0">0</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    
+                                </select>
+
+                            </div>
+
+                            <!-- <div class="select__icon">
+
+                                <label for="myS" class="bi bi-chevron-down"></label>
+
+                            </div>                             -->
+
+                        </div>
+
+                        <div class="hours">
+
+                            <div class="select">
+                                
+                                <label class="time__label">Hours</label>
+                                <select class="select__time" formControlName="hours"> 
+                                    
+                                    <option *ngFor="let hour of hours" 
+                                            [value]="hour">
+                                        {{ hour }}
+                                    </option>
+                                    
+                                </select>
+
+                            </div>
+
+                            <!-- <div class="select__icon">
+                                <i class="bi bi-chevron-down"></i>
+                            </div> -->
+
+                        </div>
+
+                        <div class="minutes">
+
+                            <div class="select">                                
+
+                                <label class="time__label">Minutes</label>
+                                <select class="select__time"
+                                        formControlName="minutes">
+                                    
+                                    <option *ngFor="let minute of minutes" 
+                                            [value]="minute">
+                                            {{ minute }}
+                                    </option>
+                                
+                                </select>
+
+                            </div>
+                            
+                            <!-- <div class="select__icon">
+                                <i class="bi bi-chevron-down"></i>
+                            </div> -->
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+                <div class="poll__remove" (click)="removePoll()">
+
+                    Remove poll
+
+                </div>
+                
+            </section>
+            
+            <a *ngIf="privacity || !normalTweet" class="post__private"> <i class="fa-solid fa-earth-americas"></i> Everyone can reply</a>
+            
+            <div class="options__cta">
+                <!-- accept="image/*" -->
+                <div class="icons">
+                    <input type="file" id="file" (change)="changeImg( $any($event).target.files[0] )">
+                    <label for="file" class="icon-bi bi bi-image"></label>
+                    <label class="icon-bi bi bi-filetype-gif"></label>
+                    <label class="icon-bi bi bi-bar-chart"></label>
+                    <label class="icon-bi bi bi-emoji-smile"></label>
+                    <label class="icon-bi bi bi-calendar-week"></label>
+                    <label class="icon-bi bi bi-geo-alt"></label>
+                </div>
+                
+                <button type="submit" class="tweet__cta" [disabled]="tweetForm.invalid">Tweet</button>
+                
+            </div>
+        </form>
+    </section>
+
+    </ng-container>
+
+</div>
+
+<ng-container *ngIf="!modalService.modalEmoji" class="emoji__modal">
+
+    <section class="emoji" id="modalEmoji">   
+
+        <emoji-mart set="twitter" 
+                    title=""
+                    emo
+                    emoji="wave"
+                    (emojiClick)="addEmoji( $event )"
+                    class="emoji__card"
+                    [style.top]="height">
+        
+        </emoji-mart>
+    
+    </section>
+
+</ng-container>  
+
+

@@ -1,0 +1,21 @@
+<section class="modal" [class.hidden]="modalService.modalProfileEdit">
+
+        <div class="modal__profile">
+            
+            <div class="modal__header">
+                
+                <a class="fa-solid fa-arrow-left"(click)="closeModalEdit()"></a>
+                
+                <h1 class="edit">Edit media</h1>
+                
+                <button class="modal__header--cta" type="submit">Apply</button>
+                
+            </div>
+            
+            <div class="img__edit">
+                <img [src]="imgTemp" alt="" class="img__temp">
+            </div>
+            
+        </div>
+        
+</section>

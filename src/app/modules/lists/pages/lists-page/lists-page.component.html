@@ -1,0 +1,297 @@
+<section class="lists">
+
+    <article class="lists__left">
+
+        <header class="header__list">
+
+            <div class="iconbox__return">
+                <i class="icon bi bi-arrow-left" (click)="back()"></i>
+            </div>
+
+            <div class="header__section">
+
+                <div class="list__title">
+                    <span class="title">Lists</span>
+                    <span class="username"> @AlbertoRU </span>
+                </div>
+
+                <div class="list__add">
+                    <i class="icon bi bi-file-earmark-plus"></i>
+                    <i class="icon bi bi-three-dots"></i>
+                </div>
+
+            </div>
+
+        </header>
+
+        <div class="pinned">
+
+            <span class="pinned__lists"> Pinned Lists </span>
+
+        </div>
+
+        <div class="nothing">
+
+            <span class="nothing__text">Nothing to see here yet — pin your favorite Lists to access them quickly.</span>
+
+        </div>
+
+        <div class="discover">
+
+            <span class="discover__text"> Discover new Lists </span>
+
+        </div>
+
+        <div class="cards__lists">
+
+            <div class="card">
+
+                <div class="iconbox__list">
+                    <i class="bi bi-card-text"></i>
+                </div>
+
+                <div class="card__section">
+
+                    <div class="card__texts">
+
+                        <span class="list__name">Developers</span>
+                        <span class="list__author"> Deisy @DeisyRR </span>
+
+                    </div>
+
+                    <div class="card__button">
+                        <button class="button"> Follow </button>
+                    </div>                
+
+                </div>
+
+            </div>
+
+        </div>      
+        
+        <div class="cards__lists">
+
+            <div class="card">
+
+                <div class="iconbox__list-2">
+                    <i class="bi bi-card-text"></i>
+                </div>
+
+                <div class="card__section">
+
+                    <div class="card__texts">
+
+                        <span class="list__name">Engineer</span>
+                        <span class="list__author"> Alan @AlanRU </span>
+
+                    </div>
+
+                    <div class="card__button">
+                        <button class="button"> Follow </button>
+                    </div>                
+
+                </div>
+
+            </div>
+
+        </div>  
+
+        <div class="cards__lists">
+
+            <div class="card">
+
+                <div class="iconbox__list-3">
+                    <i class="bi bi-card-text"></i>
+                </div>
+
+                <div class="card__section">
+
+                    <div class="card__texts">
+
+                        <span class="list__name"> Science </span>
+                        <span class="list__author"> Bryan @BryanRU </span>
+
+                    </div>
+
+                    <div class="card__button">
+                        <button class="button"> Follow </button>
+                    </div>                
+
+                </div>
+
+            </div>
+
+        </div>  
+
+    </article>
+
+    <article class="lists__right">
+        
+        <div class="profile__search">            
+
+            <input type="text" 
+                   placeholder="Search Twitter"
+                   class="input__search">
+
+            <i class="bi bi-search"></i>
+
+        </div>
+
+        <aside class="whats__happening">
+
+            <span class="whats__title"> Whats's happening </span>
+
+            <article class="card__new" *ngFor="let item of newService.newScienceResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Science · 3 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> Tesla Motors </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> FinTech </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+                        
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <article class="card__new" *ngFor="let item of newService.newTechnologyResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Technology · 2 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </aside> 
+
+        <aside class="who__follow">
+
+            <span class="who__like">You might like</span>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">
+
+                    <img src="https://www.biografiasyvidas.com/monografia/newton/fotos/newton_joven.jpg" 
+                    alt=""
+                    class="recomendation__img">
+                    
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Bryan Rios </span>
+                        <span class="recomendation__username"> @Bryan </span>
+
+                    </div>
+
+                    <a class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">                    
+                    <img src="https://www.cladera.org/biografias/pics/cientificos/bohr.jpg" 
+                    alt=""
+                    class="recomendation__img">
+
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Alberto Uribe </span>
+                        <span class="recomendation__username"> @AlUribe </span>
+
+                    </div>
+
+                    <a class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <span class="show"> Show more </span>
+
+        </aside> 
+
+    </article>
+
+</section>

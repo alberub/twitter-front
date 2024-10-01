@@ -1,0 +1,30 @@
+.noLikes{
+    box-sizing: border-box;
+    width: 370px;
+    height: 150px;
+    padding: 0 32px;
+    margin: 32px auto;
+    /* background: #536471; */
+}
+
+.noLikesh1{
+    font-size: 31px;
+    color: black;
+}
+
+.noLikesh2{
+    font-size: 13px;
+    color: #536471;
+}
+
+.margin__mobile{
+    display: none;
+    width: 100vw;
+    height: 53px;
+}
+
+@media screen and ( max-width: 500px ) {
+    .margin__mobile{
+        display: block;
+    }
+}

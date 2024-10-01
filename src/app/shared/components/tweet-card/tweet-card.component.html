@@ -1,0 +1,220 @@
+<section class="card__tweet" #isPoll id="tweetCard">
+
+    <ng-container *ngIf="retweeted">    
+
+        <aside class="card__tweet-label">
+
+            <div class="iconbox__retweet">
+                <i class="icon__retweet fa-solid fa-retweet"></i>
+            </div>
+
+            <a class="tweet__label"> You Retweeted </a>
+
+        </aside>
+
+    </ng-container>
+
+    <article class="card__tweet-body">    
+
+        <div class="profile__tweet--picture">
+            
+            <img [src]="tweet.imagenUser" class="post__img">
+
+        </div>
+
+        <div class="tweet__body">
+
+            <div class="tweet__header">
+
+                <div class="tweet__data">
+
+                    
+                    <a [routerLink]="[ '/', tweet.userId.username ]"
+                        id = "nameModalHover"
+                        (mouseover)="showModal( tweet.userId.username )"
+                        (mouseover)="handlePosition( $event )"
+                        (mouseleave)="hideModal()" 
+                    class="tweet__name"> {{ tweet.userId.firstName | titlecase }} 
+                                            {{ tweet.userId.lastName | titlecase }}
+                        
+                    </a>
+
+                    <span class="tweet__username">@{{ tweet.userId.username }}</span>
+                    <span class="tweet__username-mobile">
+                        @{{ tweet.userId.username | slice:0:9 }}
+                        {{( tweet.userId.username.length > 10 ? '...' : '' )}}
+                    </span>
+
+                    <span> · </span>
+
+                    <span class="tweet__date" 
+                        [routerLink]="[ '/',tweet.name,'status',tweet._id ]"> 
+                        {{ tweet.createdAt }} 
+                    </span>
+
+                </div>    
+
+                <div class="tweet__options">
+
+                    <!-- <a (click)="deleteTweet( tweet )" class="icon-bi bi bi-three-dots"></a> -->
+                    <a (click)="actionForModalTweetCard( tweet )" 
+                    class="icon-bi bi bi-three-dots"
+                    id="tweetCardAction">
+                    </a>
+
+                </div>
+
+            </div>
+
+            <ng-container *ngIf="tweet.reply === true" class="reply__condition">
+
+                <span class="answer"> Replying to <span class="answer__to">@{{ tweet.replyTo }} </span> </span>
+
+            </ng-container>
+
+            <div [routerLink]="[ '/',tweet.name,'status',tweet._id ]">
+                <span class="tweet__message"> {{ tweet.message }} </span>
+            </div>
+
+            <div class="tweet__media" 
+                *ngIf="tweet.img">
+                
+                <img [src]="tweet.imgTweet" 
+                    class="tweet__img"
+                    (click)="historial( tweet.name, tweet._id, tweet  )">
+                
+            </div>
+
+            <!-- Section before select option in poll ======================================================= -->
+
+            
+            <ng-container *ngIf="tweet.poll && !isMyPoll && !voted && !pollExpired ">
+
+                <figure class="poll__vote">
+
+                    <div class="select__option1" (click)="votePoll( tweet._id, user.uid, 'option1'  )">
+
+                        <span class="select__text"> {{ tweet.option1!.choice }} </span>
+
+                    </div>
+
+                    <div class="select__option2" (click)="votePoll( tweet._id, user.uid, 'option2' )">
+
+                        <span class="select__text"> {{ tweet.option2!.choice2 }} </span>
+
+                    </div>
+
+                    <span class="count__poll"> {{ total }} votes · {{ tweetExpire }} </span>
+
+                </figure>    
+
+            </ng-container>
+            
+            <!-- POLL SECTION AFTER VOTE ==================================================================== -->
+
+            <ng-container *ngIf="tweet.userId._id === uid && tweet.poll || pollExpired && tweet.poll || voted">
+                
+                <figure class="poll" [routerLink]="[ '/',tweet.name,'status',tweet._id ]">
+                    
+                    <div class="poll__option">
+                        
+                        <span class="choice__opt"
+                        [ngClass]="{ 'final__results-font': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }">
+
+                            {{ tweet.option1!.choice }}
+                            <i [ngClass]="{ 'bi bi-check-circle': isMySelection === 'option1' }"></i>
+
+                        </span>
+                        
+                        <span class="choice__percent"
+                        [ngClass]="{ 'final__results-font': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }"> 
+                            {{ percent }}% 
+                        </span>
+                        
+                        <div [ngClass]="{ 'percent': percent === 0 || percent === 100,
+                                        'final__results': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }" 
+                        [style.width]="getPercent" 
+                        class="choice"></div>
+                        
+                    </div>
+                    
+                    <div class="poll__option-2">
+                        
+                        
+                        <span class="choice__opt"
+                        [ngClass]="{ 'final__results-font': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }"> 
+
+                            {{ tweet.option2!.choice2 }} 
+                            <i [ngClass]="{'bi bi-check-circle': isMySelection === 'option2' }"></i>
+
+                        </span>
+                        
+                        <span class="choice__percent"
+                        [ngClass]="{ 'final__results-font': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }"> 
+                            {{ percent2 }}% 
+                        </span>
+                        
+                        <div [style.width]="getPercent2" 
+                        [ngClass]="{ 'percent': percent2 === 0 || percent2 === 100,
+                                    'final__results': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }" 
+                        class="choice"></div>
+                        
+                    </div>
+                    
+                    <span class="count__poll"> {{ total }} votes · {{ tweetExpire }} </span>
+                    
+                </figure>
+                
+            </ng-container>
+
+            <!-- ============================================================================================ -->
+            <!-- Reactions section -->
+
+            <div class="icons__tweet">
+
+                <div class="tweet__reactions mobile__start">                
+                    <a (click)="openModalReply( tweet )" class="icon-bi bi bi-chat"></a><span class="reactions"> {{ tweet.replies?.length }} </span>
+                </div>
+
+                <div class="tweet__reactions">
+                    <a (click)="retweet( tweet._id )" 
+                    class="icon-bi fa-solid fa-retweet"
+                    [ngClass]="{'retweeted': retweeted === true, 'false': retweeted === false }">
+                    </a>
+                    <span [ngClass]="{'retweeted': retweeted}" class="reactions"> {{ tweet.retweets?.length }} </span>
+                </div>
+
+                <div class="tweet__reactions">
+
+                    <a [ngClass]="{
+                        'bi-heart': tweet.liked === false,
+                        'bi-heart-fill liked': tweet.liked === true }" 
+                        class="icon-bi bi" (click)="likeTweet( tweet._id )"></a>
+                        
+                    <span [ngClass]="{'liked': tweet.liked === true }" class="reactions"> {{ tweet.likes?.length }} </span>
+                    
+                </div>
+
+
+                <div class="tweet__reactions hidemobile">
+
+                    <!-- <a class="icon-bi bi bi-box-arrow-up" (click)="actionForBookmark( tweet._id )"></a> -->
+                    <a class="icon-bi bi bi-box-arrow-up" 
+                    (click)="actionForModalTweetCardShare( tweet )"></a> 
+
+                </div>
+
+                <div class="tweet__reactions mobile__end">
+                    <i class="icon-bi bi bi-share" (click)="openModalShareMobil( tweet )"></i>
+                </div>
+            
+            </div>
+
+        </div>
+
+    </article>
+
+</section>
+
+<!-- <i class="fa-solid fa-retweet"></i> -->
+

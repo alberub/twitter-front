@@ -1,0 +1,8 @@
+.emoji__card{
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    top: 150px;
+    left: 450px;
+    z-index: 9999;
+}

@@ -1,0 +1,599 @@
+<section class="messages">
+
+    <div class="messages__left">
+        
+        <header class="header__messages">
+
+            <div class="header__sidebarmobile">
+
+                <div class="header__picture">
+
+                    <img [src]="user.imagenUrl" alt="" 
+                         class="header__img"
+                         (click)="actionSidebarMobile()">
+
+                </div>
+
+                <div class="messages__title">
+                    <h1 class="messages__title">Messages</h1>
+                </div>
+
+            </div>        
+            
+            <div class="header__icons">
+                <i class="icons bi bi-gear"></i>
+                <i class="icons bi bi-envelope-plus" (click)="newChat()"></i>
+            </div>
+            
+        </header>
+
+        <ng-container *ngIf="activeSpinner">
+
+            <div class="spinner"></div>
+
+        </ng-container>
+
+        <ng-container *ngIf="conversations.length === 0 && !activeSpinner">            
+
+            <div class="empty__inbox">
+                
+                <span class="empty__title">Welcome to your inbox!</span>
+                <span class="empty__subtitle"> Drop a line, share Tweets and more with private conversations between you and others on Twitter.</span>
+                <button class="empty__cta" (click)="newChat()"> Write a message </button>
+                
+            </div>
+
+        </ng-container>        
+        
+        <div class="search" *ngIf="searchChat && conversations.length > 0" (click)="search()">
+            
+            <div class="search__messages">
+                
+                <i class="bi bi-search"></i>
+                <span class="box__search">Search Direct Messages</span>
+                
+            </div>
+            
+        </div>
+
+<!-- =============================================================================================================== -->
+<!-- ========================================= SEARCH CHAT ========================================================= -->
+
+        <div class="search__data" *ngIf="!searchChat">
+
+            <i class="bi bi-arrow-left" (click)="searchBack()"></i>
+            
+            <div class="search__input">
+                
+                <i class="bi bi-search"></i>
+                <input class="input__searchChat" 
+                       type="text" 
+                       (keyup)="buscar(txtTermino.value)"
+                       #txtTermino
+                       placeholder="Search Direct Messages">
+                <i class="bi bi-x-circle-fill" *ngIf="clearform" (click)="clearForm()"></i>
+                
+            </div>
+            
+        </div>
+
+        <div class="search__results" *ngIf="!searchChat && !resultsFound">
+
+            <span class="try__search">Try searching for people, groups, or messages</span>
+
+        </div>
+
+        <div class="results__found" *ngIf="resultsFound">
+
+            <a (click)="setStyle('all')" [class.route__underline]="getResult === 'all'"
+                class="results__filter all">All</a>
+            <a (click)="setStyle('people')" [class.route__underline]="getResult === 'people'" 
+                class="results__filter people">People</a>
+            <a (click)="setStyle('groups')" [class.route__underline]="getResult === 'groups'" 
+                class="results__filter groups">Groups</a>
+            <a (click)="setStyle('msgs')" [class.route__underline]="getResult === 'msgs'" 
+                class="results__filter msgs">Messages</a>
+
+        </div>
+
+        <div [ngSwitch]="getResult" *ngIf="resultsFound">
+
+            <div *ngSwitchCase="'all'">
+
+                <div class="all__head" *ngIf="found[0]">
+                    <i class="bi bi-person-fill"></i>
+                    <span class="head__text">People</span>
+                </div>
+
+                <div class="all__result" *ngIf="found[0]">
+                    <img [src]="found[0].img | imagen:'users'" class="found__img">
+                    <div class="all__texts">
+                        <span> {{ found[0].firstName }} </span>
+                        <span class="found__username"> @{{ found[0].username }} </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <p *ngSwitchCase="'people'">
+                
+            </p>
+            <p *ngSwitchDefault>
+            
+            </p>
+        </div>
+
+<!-- ===================================================================================================== -->
+<!-- ====================================== CONVERSATIONS CARDS ========================================== -->
+
+        <div class="conversations" *ngIf="searchChat && conversations.length > 0">
+
+            <ng-container *ngFor="let conversation of conversations">            
+                
+                <figure class="conversation__card"                                                  
+                        (click)="setChat( conversation )"                        
+                        [ngClass]="{'chat__border': conversation._id === currentConversation }">
+                    
+                    <div class="conversation__picture">
+                        <img [src]="conversation.members[0].img | imagen:'users'" class="conversation__img">
+                    </div>
+                    
+                    <div class="texts">
+                        
+                        <div class="user__info">
+                            <span class="firstname"> {{ conversation.members | filter }} {{ conversation.members[0].firstName }} </span>
+                            <span class="lastname"> {{ conversation.members | filter }} {{ conversation.members[0].lastName }} </span>
+                            <span class="medium__gray"> {{ conversation.members | filter }} @{{ conversation.members[0].username }}</span>
+                            
+
+                            <div class="text__message" *ngIf="conversation.messages.length > 0">                
+
+                                <span [ngClass]="{'hasNewMessage': conversation.messages[ conversation.messages.length -1 ].readed === false 
+                                                && conversation.messages[ conversation.messages.length -1 ].from !== uid }"> 
+                                        
+                                    {{ (conversation.messages[ conversation.messages.length -1 ].message) | slice:0:45 }}
+                                    {{ (conversation.messages[ conversation.messages.length -1 ].message.length > 45) ? '...' : '' }}
+
+                                </span>
+
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="message__ago">
+
+                            <span class="message__time"> {{ conversation.messages | gdate }} </span>
+                            
+                            <!-- <i class="modaldots bi bi-three-dots" 
+                               *ngIf="showCardOptions"
+                               id="optionCta"
+                               (click)="optionsModal()">
+                            </i> -->
+                            
+
+                        </div>
+
+                        
+                    </div>
+                    
+                </figure>
+                
+            </ng-container>
+
+        </div>
+
+    </div>
+
+    <!-- ===================================================================================== -->
+
+    <div class="messages__right" id="messagesright">
+
+        <div class="no-message" *ngIf="!chatSelected">
+
+            <span class="title">Select a message</span>
+            <span class="subtitle">Choose from your existing conversations, start a new one, or just keep swimming.</span>
+            <button class="conversation__cta" (click)="newChat()">New message</button>
+
+        </div>
+
+        <!-- ============================================================================================ -->
+        <!-- ====================================== Section messages ==================================== -->
+
+        <div class="chat" *ngIf="chatSelected && !conversationInfo" id="idForChatResponsive">
+
+            <div class="details" *ngIf="chatSelected">
+
+                <div class="user__details">
+
+                    <div class="iconbox__responsive" (click)="actionForChatResponsive()">
+                        <i class="bi bi-arrow-left"></i>
+                    </div>
+
+                    <div class="user__picture">
+                        <img [src]="chatSelected.members[0].img | imagen:'users'" class="user__img">
+                    </div>
+
+                    <div class="user__data">
+
+                        <span class="names"> {{ chatSelected.members[0].firstName }} </span>
+                        <span class="username">@{{ chatSelected.members[0].username }}</span>
+
+                    </div>
+
+                </div>
+
+                <div class="details__cta">
+                    <i class="icons bi bi-info-circle" (click)="userInfo( true )"></i>
+                </div>
+
+            </div>
+
+            <div class="messages__area" id="messageArea">
+
+                
+                    <div *ngFor="let item of conversationMessage"
+                         [ngClass]="{'message__received': item.from !== user.uid ,
+                                     'message__sent': item.from === user.uid }" 
+                         class="animate__animated animate__fadeIn">                        
+
+                        <span [ngClass]="{'message__in': item.from !== user.uid ,
+                                          'message__out': item.from === user.uid }"> 
+                              {{ item.message }}
+                        </span>                                            
+                        
+                    </div>                                         
+                    
+                    <div class="chat__profile" [routerLink]="['/', chatSelected.members[0].username ]" >
+
+                        <div class="profile__data">
+
+                            <span class="medium__texts--black">{{ chatSelected.members[0].firstName }} {{ chatSelected.members[0].lastName }} </span>
+                            <span class="medium__gray"> @{{ chatSelected.members[0].username }} </span>
+
+                        </div>
+
+                        <div class="profile__follows">
+
+                            <span class="medium__texts--black"> {{ chatSelected.members[0].followings.length }} </span> <span class="medium__gray"> Following </span>                
+                            <span class="medium__texts--black"> {{ chatSelected.members[0].followers.length }} </span> <span class="medium__gray"> Follower </span>
+
+                        </div>
+
+                        <div class="user__joined">
+
+                            <i class="bi bi-calendar2-week"></i>
+                            <span class="medium__gray"> Joined {{ chatSelected.members[0].createdAt | date:'MMMM y' }} </span>
+
+                        </div>
+
+                    </div>
+
+            </div>
+
+            <div class="create__message">
+
+                <div class="new__message">
+                    
+                    <div class="message__uploads">
+                        
+                        <i class="icons__chat bi bi-image"></i>
+                        <i class="icons__chat bi bi-filetype-gif"></i>
+                        
+                    </div>
+
+                    <form [formGroup]="messageForm" (ngSubmit)="sendMessage()" class="message__input">
+                            
+                            <input type="text" 
+                                   placeholder="Start a new message" 
+                                   class="input"
+                                   formControlName="message">
+
+                            <a class="icons__chat bi bi-emoji-smile"></a>            
+
+                    </form>
+
+                    <div class="message__cta">
+                            
+                        <a (click)="sendMessage()" class="icons__chat bi bi-send"></a>
+                        
+                    </div>
+
+                </div>
+                
+            </div>
+            
+        </div>
+
+        <!-- ========================================== CONVERSATION INFO =============================== -->
+
+        <ng-container *ngIf="conversationInfo && chatSelected">
+
+            <div class="conversation__info">
+                
+                <div class="info__header">
+                    
+                    <i class="bi bi-arrow-left" (click)="userInfo( false )"></i>
+                    
+                    <span class="info__text">Conversation info</span>
+                    
+                </div>
+
+                <div class="info__user">
+
+                    <div class="info__picture">
+
+                        <img [src]="chatSelected.members[0].img | imagen: 'users'" 
+                        alt="" 
+                        class="info__img">
+
+                    </div>
+
+                    <div class="info__data">
+
+                        <div class="info__names">
+
+                            <p class="info__name"> {{ chatSelected.members[0].firstName }} </p>
+                            <p class="info__username"> @{{  chatSelected.members[0].username }} </p>
+
+                        </div>
+
+                        <a href="#" class="info__cta"> Following </a>
+
+                    </div>
+
+                    <div class="notif__space"></div>
+
+                </div>
+
+                <div class="notifications">
+
+                    <div class="notif__space"></div>
+
+                    <div class="notification__header">
+
+                        <span class="notif"> Notifications </span>
+
+                    </div>
+
+                    <div class="notification__toggle">
+
+                        <span class="notif__text"> Snooze notifications from {{ chatSelected.members[0].firstName }} </span>
+
+                        <i *ngIf="true" class="bi bi-toggle2-off"></i>                        
+
+                    </div>
+
+                    <div class="notif__space"></div>
+
+                    <div class="block">
+                        <span>Block @{{ chatSelected.members[0].username }} </span>
+                    </div>
+                    <div class="report">
+                        <span>Report @{{ chatSelected.members[0].username }} </span>
+                    </div>
+                    <div class="leave">
+                        <span> Leave conversation </span>
+                    </div>
+
+                </div>
+                
+            </div>
+
+        </ng-container>
+        
+    </div>
+    
+</section>
+
+<!-- ============================================= MODAL NEW CHAT SECTION =============================== -->
+<!-- ============================================= MODAL NEW CHAT SECTION =============================== -->
+
+<section class="create__chat" [class.hide]="modalService.modalNewChat">
+
+    <div class="chat__modal">
+
+        <div class="chat__header">
+
+            <div class="icon__box">
+                <i class="bi bi-x" (click)="closeModalNewChat()"></i>
+            </div>
+
+            <div class="new__cta">
+                <span class="header__text"> New message </span>
+                <button class="cta__next" [disabled]="noSelection" (click)="createChat()">Next</button>
+            </div>
+
+
+        </div>
+
+        <form class="chat__search"
+              [formGroup]="dataForm">
+
+            <div class="icon__search">
+                <i class="bi bi-search"></i>
+            </div>
+
+            <input class="input__search" 
+                   type="text" 
+                   placeholder="Search people"
+                   id="focus"
+                   formControlName="term"
+                   autocomplete="off">
+
+        </form>
+
+        <div class="divider"></div>
+
+        <!--================================= Section without results =================================== -->
+
+        <div class="chat__group" *ngIf="!results && !selectedNew">
+
+            <div class="icon__group">
+
+                <i class="fa-solid fa-users"></i>
+
+            </div>
+
+            <span class="group__text"> Create a group </span>
+
+        </div>
+
+        <!-- ================================ SECTION BADGES SELECTION ================================== -->
+
+        <ng-container *ngIf="selectedNew">                   
+
+            <div class="selected__badge">
+                
+                <div class="badge__container" *ngFor="let badge of badges">
+                    
+                    <div class="badge__picture">
+                        
+                        <img [src]="badge.img! | imagen:'users'" alt="" class="badge__img">
+                        
+                    </div>
+                    
+                    <span class="badge__name"> {{ badge.firstName }} </span>
+                    
+                    <i class="bi bi-x" (click)="removeBadge( badge )"></i>
+                    
+                </div>
+                
+            </div>
+
+        </ng-container>
+        
+        <!-- =================================================================== -->
+        <!-- =================================================================== -->
+        <!-- =================================================================== -->
+
+        <ng-container *ngIf="conversations.length > 0">
+        
+            <ng-container *ngIf="!results">
+            
+                <div class="chat__users" *ngFor="let item of conversations">
+
+                    <!-- <div class="isfollow">
+
+                        <div class="icon__person">
+
+                            <i class="bi bi-person-fill"></i>
+
+                        </div>
+                        
+                        <span class="following"> Following </span>
+
+                    </div>                             -->
+                    
+                    <div class="chat__exists">
+
+                        <div class="chat__picture">                        
+
+                            <img [src]="item.members[0].img! | imagen:'users'" 
+                                alt=""
+                                class="chat__img">
+                            
+                        </div>
+
+                        <div class="chat__data">
+
+                            <span class="chat__name"> {{ item.members[0].firstName }} </span>
+                            <span class="chat__username"> @{{ item.members[0].username }} </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            
+            </ng-container>
+
+        </ng-container>
+
+        <!-- ============================================================================================ -->
+        <!-- ======================================= CARD RESULTS FOUND ================================ -->
+
+        <ng-container *ngIf="results">    
+
+            <div class="cards__results">
+                
+                <div class="card__result" 
+                     *ngFor="let user of foundResults"
+                     (click)="pushBadge( user )">
+                    
+                    <figure class="card__picture">
+                        
+                        <img [src]="user.img! | imagen:'users'" class="card__img">
+                        
+                    </figure>
+                    
+                    <div class="card__texts">
+                        
+                        <span class="card__name"> {{ user.firstName }} </span>
+                        <span class="card__username"> @{{ user.username }} </span>
+                        
+                    </div>
+                    
+                </div>            
+                
+            </div>
+
+        </ng-container>
+
+    </div>
+
+</section>
+
+<ng-container class="container__modal">    
+
+    <div class="modal__chat" 
+         [class.hidden]="modalService.modalChatOptions">
+        
+        <div class="modal__option" id="MCOption">
+            
+            <i class="bi bi-pin"></i>
+            <p class="modal__text"> Pin conversation </p>
+            
+        </div>
+        
+        <div class="modal__option">
+            
+            <i class="bi bi-trash3"></i>
+            <p class="modal__text--delete"> Delete conversation </p>
+            
+        </div>
+        
+        <div class="modal__option">
+            
+            <i class="bi bi-flag"></i>
+            <p class="modal__text"> Report conversation </p>
+            
+        </div>
+        
+        <div class="modal__option">
+
+            <i class="bi bi-bell-slash"></i>
+            <p class="modal__text"> Snooze conversation </p>
+            
+        </div>
+        
+    </div>
+
+</ng-container>
+
+<app-sidebar-mobile></app-sidebar-mobile>
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

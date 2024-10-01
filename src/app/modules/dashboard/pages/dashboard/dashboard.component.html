@@ -1,0 +1,45 @@
+<div class="dashboard" id="dashboardMain">
+
+    <div class="container" #dash (click)="getHeight()">
+
+        <div class="wrapper">
+            
+            <app-sidebar></app-sidebar>
+
+            <app-menu-mobil [isRouteMessage]=isTheMessagePath></app-menu-mobil>
+                
+                <div class="home-wrapper" id="home">
+                    
+                    <router-outlet></router-outlet>
+                    
+                </div>            
+            
+            <div *ngIf="!modalService.modalNew">
+                <app-modal-new></app-modal-new>
+            </div>
+            
+        </div>
+
+    </div>
+
+</div>
+
+<app-alert></app-alert>
+
+<app-hover-modal id="modalHoverInHomeComponent"></app-hover-modal>
+
+<app-share-menu-mobile></app-share-menu-mobile>
+
+<app-modal-tweet-card id="modalForTweetCard" [clienteX]="clienteX" [clienteY]="clienteY"></app-modal-tweet-card>
+
+<app-image-tweet></app-image-tweet>
+
+<ng-container *ngIf="!modalService.modalReply">
+
+    <app-modal-reply></app-modal-reply>
+
+</ng-container>
+
+<app-modal-small></app-modal-small>
+
+    

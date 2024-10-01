@@ -1,0 +1,15 @@
+<ng-container *ngIf="tweetService.followsInfo$ | async as follows">
+
+    <div *ngIf="follows.length > 0">
+
+        <div *ngFor="let item of follows">
+            
+            <app-follows [user]="item"></app-follows>
+            
+        </div>
+
+    </div>
+
+</ng-container>
+
+

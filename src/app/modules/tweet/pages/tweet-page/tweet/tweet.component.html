@@ -1,0 +1,453 @@
+<section class="tweet">
+
+    <section class="tweet__left" *ngIf="!loading">
+
+        <div class="header__profile">
+    
+            <div class="icon__return">
+                <app-back></app-back>
+            </div>
+    
+            <div class="profile__name">
+                <h1 class="header__text"> Tweet </h1>
+            </div>
+    
+        </div>
+    
+        <div class="body__tweet">
+    
+            <img [src]="tweet.userId.img! | imagen:'users'" class="body__img">
+    
+            <div class="tweet__user--cta">
+    
+                <div class="user__data-names">
+                    <a class="tweet__name" [routerLink]="['/',tweet.userId.username]"> {{ tweet.userId.firstName }} </a>
+                    <span class="tweet__username"> @{{ tweet.userId.username }} </span>
+                </div>
+    
+                <div (click)="actionForModalTweetCard( tweet )">
+                    <a class="bi bi-three-dots"></a>
+                </div>
+    
+            </div>
+    
+        </div>
+    
+        <div class="tweet__data">
+
+            <ng-container *ngIf="tweet.reply === true">
+                <div class="replying__container">
+                    <span class="replying"> Replying to <span class="replyingto" [routerLink]="['/', tweet.replyTo ]"> @{{ tweet.replyTo }} </span> </span>                    
+                </div>
+            </ng-container>            
+    
+            <div class="message__container">
+                <span class="tweet__message"> {{ tweet.message }} </span>
+            </div>
+    
+            <!--===================================== SECTION POLL VOTE ===================================== -->
+    
+            <ng-container *ngIf="tweet.poll && !isMyPoll && !voted && !pollExpired ">
+    
+                <figure class="poll__vote">
+    
+                    <div class="select__option1" (click)="votePoll( tweet._id, user.uid, 'option1'  )">
+    
+                        <span class="select__text"> {{ tweet.option1!.choice }} </span>
+    
+                    </div>
+    
+                    <div class="select__option2" (click)="votePoll( tweet._id, user.uid, 'option2' )">
+    
+                        <span class="select__text"> {{ tweet.option2!.choice2 }} </span>
+    
+                    </div>
+    
+                    <span class="count__poll"> {{ total }} votes · {{ tweetExpire }} </span>
+    
+                </figure>    
+    
+            </ng-container>
+    
+            <!-- ============================================================================================= -->
+    
+            <!-- ================================ SECTION AFTER POLL ========================================= -->
+    
+            <!-- <ng-container *ngIf="tweet.userId._id === uid && tweet.poll || 
+                                 pollExpired && tweet.poll && 
+                                 voted"> -->
+
+            <ng-container *ngIf="( isMyPoll && tweet.poll ) || 
+                                 ( tweet.poll && voted )">
+                
+                <figure class="poll">
+                    
+                    <div class="poll__option">
+                        
+                        <span class="choice__opt"
+                              [ngClass]="{ 'final__results-font': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }">
+    
+                            {{ tweet.option1!.choice }} 
+    
+                            <i [ngClass]="{ 'bi bi-check-circle': isMySelection === 'option1' }"></i>
+    
+                        </span>
+                        
+                        <span class="choice__percent"
+                              [ngClass]="{ 'final__results-font': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }"> 
+                            {{ percent }}% 
+                        </span>
+                        
+                        <div [ngClass]="{ 'percent': percent === 0 || percent === 100,
+                                          'final__results': pollExpired && tweet.option1!.vote >= tweet.option2!.vote }" 
+                        [style.width]="getPercent" 
+                        class="choice"></div>
+                        
+                    </div>
+                    
+                    <div class="poll__option-2">
+                        
+                        
+                        <span class="choice__opt" 
+                              [ngClass]="{'final__results-font': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }"> 
+    
+                            {{ tweet.option2!.choice2 }} 
+                            <i [ngClass]="{'bi bi-check-circle': isMySelection === 'option2' }"></i>
+    
+                        </span>
+                        
+                        <span class="choice__percent"
+                              [ngClass]="{ 'final__results-font': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }"> 
+                            {{ percent2 }}% 
+                        </span>
+                        
+                        <div [style.width]="getPercent2" 
+                        [ngClass]="{ 'percent': percent2 === 0 || percent2 === 100,
+                                     'final__results': pollExpired && tweet.option2!.vote >= tweet.option1!.vote }" 
+                        class="choice"></div>
+                        
+                    </div>
+                    
+                    <span class="count__poll"> {{ total }} votes · {{ tweetExpire }} </span>
+                    
+                </figure>
+                
+            </ng-container>
+    
+    <!-- ===================================================================================================== -->
+    <!-- ========================================= SECTION  TWEET DATE ======================================= -->
+    
+            <img *ngIf="tweet.img" [src]="tweet.img! | imagen:'tweets'" class="tweet__img">
+    
+            <p class="tweet__date"> {{ tweet.createdAt | date:'h:mm a · MMM d, y' }} </p> 
+    
+            <div class="tweet__reactions--count" *ngIf="tweet.retweets!.length > 0 || tweet.likes!.length > 0">
+    
+                <p *ngIf="tweet.retweets!.length > 0"> {{ tweet.retweets?.length | i18nPlural: valueRetweet }} </p>
+                <p> {{ tweet.likes?.length | i18nPlural: value }} </p>
+    
+            </div>
+    
+            <div class="tweet__icons">
+    
+                <div class="tweet__reactions">
+                    <a class="icon-bi bi bi-chat" (click)="openModalReply( tweet )"></a>
+                </div>
+    
+                <div class="tweet__reactions">
+                    <a (click)="retweet( tweet._id )" 
+                       class="icon-bi fa-solid fa-retweet" 
+                       [ngClass]="{'Retweeted': retweeted === true, 
+                                   'noRetweeted': retweeted === false }">
+                    </a>
+                </div>
+    
+                <div class="tweet__reactions" (click)="likeTweet( tweet._id )">
+    
+                    <a [ngClass]="{
+                        'bi-heart':tweet.liked !== true,
+                        'bi-heart-fill liked':tweet.liked === true
+                    }" class="icon-bi bi"></a>
+    
+                    
+                </div>
+    
+                <div class="tweet__reactions" (click)="actionForModalTweetCardShare( tweet )">
+                    <a class="icon-bi bi bi-upload"></a>
+                </div>
+    
+            </div>
+    
+        </div>
+    
+        <!-- ================================================================================================= -->
+        <!-- ==================================== SECTION BEFORE CLICK REPLY ================================= -->
+    
+        <div class="tweet__reply" *ngIf="!clickInReplyArea">
+    
+            <div class="reply__container">
+    
+                <div class="reply__picture">
+                    <img [src]="user.img! | imagen:'users'" class="reply__img">
+                </div>
+                
+                <div class="reply__texts">
+                    <input class="reply__input" (click)="reply()" type="text" placeholder="Tweet your reply">
+                    <button class="reply__cta-disable">Reply</button>
+                </div>
+                
+            </div>
+    
+        </div>
+    
+        <!-- ================================================================================================= -->
+        <!-- ======================================= SECTION WRITE REPLY ======================================-->
+    
+        <div class="tweet__reply--click animate__animated animate__fadeIn" *ngIf="clickInReplyArea">
+    
+            <div class="reply__container--click">
+    
+                <div class="reply__picture">
+                    <img [src]="user.img! | imagen:'users'" class="reply__img">
+                </div>
+                
+                <form class="reply__actions" [formGroup]="replyForm" (ngSubmit)="createReply()">
+    
+                    <div class="reply__to">
+                        <p class="replying">Replying to <span class="link"> @{{ tweet.userId.username }} </span></p>
+                    </div>
+                    
+                    <div class="reply__texts">
+    
+                        <textarea placeholder="Tweet your reply"
+                                  class="textArea__placeholder" 
+                                  #textArea2
+                                  id="setFocus"
+                                  formControlName="message">
+    
+                        </textarea>
+    
+                    </div>
+    
+                    <div class="files" *ngIf="imgTemp">
+    
+                        <div class="iconbox__clearimg">
+    
+                            <i class="bi bi-x" (click)="clearImgTemp()"></i>
+    
+                        </div>
+    
+                        <img *ngIf="imgTemp" [src]="imgTemp" alt="" class="image__reply">
+    
+                    </div>
+                    
+                    <div class="reply__button">
+    
+                        <div class="reply__icons">                        
+    
+                            <input type="file" id="fileReply" 
+                                   (change)="changeImg( $any($event).target.files[0] )">
+    
+                            <label for="fileReply" class="icon-bis bi bi-image"></label>
+    
+                            <label class="icon-bis bi bi-filetype-gif"></label>
+                            <label class="icon-bis bi bi-emoji-smile"></label>
+                            <label class="icon-bis bi bi-geo-alt"></label>
+    
+                        </div>
+    
+                        <button type="submit" [disabled]="replyForm.invalid && !imgTemp" class="reply__cta">Reply</button>
+    
+                    </div>
+    
+                </form>
+                
+            </div>
+    
+        </div>
+    
+        <div *ngFor="let tweet of replies" 
+             class="tweet__card--reply animate__animated animate__fadeIn">
+    
+            <app-tweet-card [tweet]="tweet"></app-tweet-card>
+    
+        </div>
+    
+        <aside class="space__bottom">
+    
+            <div class="space"></div>
+    
+        </aside>
+    
+    </section>
+
+    <aside class="tweet__right">
+
+        <div class="profile__search">            
+
+            <input type="text" 
+                   placeholder="Search Twitter"
+                   class="input__search">
+
+            <i class="bi bi-search"></i>
+
+        </div>
+
+        <aside class="relevant">
+
+            <span class="relevant__people">Relevant people</span>
+
+            <div class="relevant__user">
+
+                <div class="relevant__picture">
+
+                    <img [src]="tweet.userId.img! | imagen:'users'" alt="" class="relevant__img">
+
+                </div>
+
+                <div class="relevant__userinfo">
+
+                    <div class="user__data">
+
+                        <div class="user__texts">
+
+                            <a href="" class="user__firstname"> {{ tweet.userId.firstName }} </a>
+                            <a class="user__username"> @{{ tweet.userId.username }} </a>
+
+                        </div>
+
+                        <ng-container *ngIf="tweet && tweet.userId._id !== uid">
+
+                            <div class="user__cta">
+
+                                <a class="cta"> Following </a>
+
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+
+                    <ng-container *ngIf="tweet && tweet.userId._id !== uid">
+
+                        <div class="user__bio">
+                            
+                            <span class="bio"> {{ tweet.userId.bio }} </span>
+                            
+                        </div>
+
+                    </ng-container>                    
+
+                </div>
+
+            </div>
+
+        </aside> 
+
+        <aside class="whats__happening">
+
+            <span class="whats__title"> Whats's happening </span>
+
+            <article class="card__new" *ngFor="let item of newService.newScienceResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Science · 3 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> Tesla Motors </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> FinTech </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+                        
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <article class="card__new" *ngFor="let item of newService.newTechnologyResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Technology · 2 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </aside>                
+
+    </aside>
+
+</section>
+
+<ng-container *ngIf="!modalService.modalReply">
+
+    <app-modal-reply></app-modal-reply>
+
+</ng-container>

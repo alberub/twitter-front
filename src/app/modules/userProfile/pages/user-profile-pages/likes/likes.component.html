@@ -1,0 +1,31 @@
+<ng-container *ngIf="activeSpinner">
+
+    <div class="spinner"></div>
+
+</ng-container>
+
+<ng-container *ngIf="noLikes">
+
+    <div class="noLikes">
+        
+        <h1 class="noLikesh1"> @{{ profileUser.username }} hasn’t liked any Tweets </h1>
+        <h2 class="noLikesh2">When they do, those Tweets will show up here.</h2>
+        
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="data.length > 0">
+
+    <ng-container *ngFor="let item of data">
+
+        <app-tweet-card [tweet]="item"></app-tweet-card>
+
+    </ng-container>
+
+</ng-container>
+
+<ng-container *ngIf="data.length > 0">
+    <div class="margin__mobile"></div>
+</ng-container>
+

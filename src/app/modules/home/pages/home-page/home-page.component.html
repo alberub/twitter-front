@@ -1,0 +1,383 @@
+<main class="main__home" id="mainhome">
+
+    <ng-container *ngIf="news.length > 0 || !suggested">    
+    
+        <section class="home__main">
+
+            <header class="home" id="homeFixed">
+
+                <div class="header__home">
+
+                    <div class="header__sidebarmobile">
+
+                        <div class="header__picture">
+
+                            <img [src]="user.imagenUrl" alt="" class="header__img" (click)="actionSidebarMobile()">
+
+                        </div>
+
+                        <h1 class="header__text">Home</h1>
+
+                    </div>
+
+                    <i class="bi bi-stars"></i>
+
+                </div>
+                    
+            </header>
+            
+            <!-- Create new tweet -->
+            
+            <app-new class="new__card" id="homenew"></app-new>
+            
+
+            <ng-container *ngIf="activeSpinner">
+
+                <div class="spinner__mobile">
+
+                    <div class="spinner"></div>
+                    
+                </div>
+
+
+            </ng-container>
+
+            <div id="homecards">
+
+                <ng-container *ngFor="let tweet of news" class="animate__animated animate__fadeIn">
+
+                    <app-tweet-card [tweet]="tweet" class="tweet__card"></app-tweet-card>
+            
+                </ng-container>
+
+            </div>
+
+            <ng-container *ngIf="!activeSpinner && news.length === 0">
+
+                <aside class="welcome">
+                    <div class="welcome__texts">
+                        <span class="title"> Welcome to Twitter! </span>
+                        <span class="subtitle"> This is the best place to see what’s happening in your world. Find some people and topics to follow now. </span>
+                        <div class="welcome__cta">
+                            <button class="welcome__lets" (click)="getMyUserInfo()">Let's go!</button>
+                        </div>
+                    </div>
+                </aside>
+
+            </ng-container>
+            
+
+        </section>
+
+    </ng-container>
+
+    <ng-container *ngIf="suggested">
+
+        <aside class="connect">
+
+            <div class="connect__header">
+                <div class="iconbox__return">
+                    <i class="bi bi-arrow-left" (click)="return()"></i>
+                </div>
+                <span class="connect__title"> Connect </span>
+            </div>
+
+            <div class="suggested__foryou">
+                <span class="suggested"> Suggested for you </span>
+            </div>
+
+            <div class="suggested__profile">                
+
+                <div class="suggested__picture">
+                    <img [src]="suggestedUser.img" alt="" class="suggested__img">
+                </div>
+
+                <div class="suggested__userinfo">
+                    <div class="suggested__header">
+                        <div class="suggested__user">
+                            <span class="suggested__firstname"> {{ suggestedUser.firstName }} </span>
+                            <span class="suggested__username"> @{{ suggestedUser.username }} </span>
+                        </div>
+                        <div class="suggested__button">
+                            <button class="suggested__cta" (click)="follow()"> Follow </button>
+                        </div>
+                    </div>
+                    <div class="suggested__bio">
+                        <span class="user__bio"> {{ suggestedUser.bio }} </span>
+                    </div>                    
+                </div>
+
+            </div>
+
+        </aside>
+
+    </ng-container>
+    
+    
+    <section class="input__search">
+
+        <!-- Aqui usamos el input para la busqueda de users -->
+        
+        <div class="home__right">
+            <form [formGroup]="searchForm">
+
+                <input (click)="openModal()"
+                    formControlName="term"
+                    type="text"
+                    id="input1" 
+                    class="search" 
+                    placeholder="Search Twitter">
+
+            </form>
+
+            <i class="icon-search bi bi-search"></i>
+            <i *ngIf="haveCharacter" 
+            class="icon-clean bi bi-x-circle-fill"
+            (click)="cleanForm()">
+            </i>
+
+        </div>
+
+        
+        <app-search [found]="usersFound" 
+                    [foundResult]="foundResult" 
+                    id="modalSearch">
+                    
+        </app-search>
+
+        <div class="cards__news">
+
+            <header class="header__news">
+                <h2 class="header__new">What's happening</h2>
+            </header>
+
+            <aside class="card__new" 
+                *ngFor="let item of newsService.newScienceResult">
+                
+                <div class="themes">
+
+                    <!-- <a class="link" href="https://{{ user.website}}" target="_blank"></a> -->
+                    
+                    <p class="theme__new">Science · Last night</p>
+                    <a class="description__new" href="{{ item.url }}"
+                        target="_blank"> {{ item.title}} </a>
+
+                </div>
+
+                <div class="card__new--picture">
+                    <img class="card__new--img" [src]="item.urlToImage" alt="">
+                </div>
+
+            </aside>
+
+            <aside class="card__trendings">
+                
+                <div class="card__trending">
+                    
+                    <p class="trending">Trending in Mexico</p>
+                    <h2 class="hashtag">#SoftwareEngineer</h2>
+                    <p class="tweet__count">11.8K Tweets</p>
+                    
+                </div>
+
+                <i class="bi bi-three-dots"></i>
+
+            </aside>
+
+            <aside class="card__trendings">
+                
+                <div class="card__trending">
+                    
+                    <p class="trending">Science · Trending</p>
+                    <h2 class="hashtag">SpaceX</h2>
+                    <p class="tweet__count">15.4K Tweets</p>
+                    
+                </div>
+
+                <i class="bi bi-three-dots"></i>
+
+            </aside>
+
+            
+            <aside class="card__trendings">
+                
+                <div class="card__trending">
+                    
+                    <p class="trending">World · Trending</p>
+                    <h2 class="hashtag">#Monterrey</h2>
+                    <p class="tweet__count">5.8K Tweets</p>
+                    
+                </div>
+                
+                <i class="bi bi-three-dots"></i>
+                
+            </aside>
+            
+            <aside class="card__new" *ngFor="let item of newsService.newTechnologyResult">
+
+                <div class="themes">
+
+                    <p class="theme__new">Technology · Today</p>
+                    <a class="description__new" href="{{ item.url }}"
+                    target="_blank"> {{ item.title}} </a>                    
+
+                </div>
+
+                <div class="card__new--picture">
+                    <img class="card__new--img" [src]="item.urlToImage" alt="">
+                </div>
+
+            </aside>
+
+        </div>
+
+        <article class="who__follow">
+
+            <aside class="card__who">
+    
+                <div class="who__header">
+    
+                    <span class="who__text">Who to follow</span>
+    
+                </div>
+    
+                <div class="who__profile-1">
+
+                    <div class="who__picture">
+
+                        <img src="https://res.cloudinary.com/firstproject/image/upload/c_scale,h_1036,q_48/v1656958708/IMG_20220701_150814_vwo6wg.jpg" 
+                        alt="" 
+                        class="who__img">
+
+                    </div>
+
+                    <div class="profile__data">
+
+                        <div class="profile__texts">
+
+                            <span class="profile__name"> Alberto Rios </span>
+                            <span class="profile__username"> @alberto </span>
+
+                        </div>
+
+                        <div class="profile__texts-responsive">
+
+                            <span class="profile__name"> 
+                                {{ 'Alberto Rios' | slice:0:13 }} 
+                                {{ ( 'Alberto Rios'.length > 13) ? '...' : '' }}
+                            </span>
+                            <span class="profile__username"> @alberto </span>
+
+                        </div>
+                        
+                        <div class="profile__cta">
+
+                            <ng-container *ngIf="!imFollowing">
+                                <button (click)="follow()" class="follow__cta">Follow</button>
+                            </ng-container>
+                            
+                            <ng-container *ngIf="imFollowing">
+                                <button (click)="follow()" class="follow__cta-following">
+                                    <span> Following </span>
+                                </button>
+                            </ng-container>
+    
+                        </div>
+
+                    </div>
+
+    
+                </div>
+    
+                <div class="who__profile-1">
+
+                    <div class="who__picture">
+                        <img src="http://c.files.bbci.co.uk/987B/production/_92653093_margaret16.jpg" 
+                            alt="" 
+                            class="who__img">
+                    </div>
+
+                    <div class="profile__data">
+
+                        <div class="profile__texts">
+
+                            <span class="profile__name"> Margaret Hamilton </span>
+                            <span class="profile__username"> @MHamilton </span>
+
+                        </div>
+
+                        <div class="profile__texts-responsive">
+
+                            <span class="profile__name"> 
+                                {{ 'Margaret Hamilton' | slice:0:13 }} 
+                                {{ ( 'Margaret Hamilton'.length > 13) ? '...' : '' }}
+                            </span>
+                            <span class="profile__username"> @MHamilton </span>
+
+                        </div>
+                        
+                    </div>
+
+                    <div class="profile__cta">
+                            
+                        <button href="#" class="follow__cta">Follow</button>
+
+                    </div>
+    
+                </div>
+    
+                <div class="who__more">
+    
+                    <span class="who__show">Show more</span>
+    
+                </div>
+    
+            </aside>
+    
+        </article>
+
+    </section>
+
+</main>
+
+<app-sidebar-mobile></app-sidebar-mobile>
+
+
+<!-- <ng-container *ngIf="!activeSpinner && news.length === 0">
+    <aside class="suggest">
+
+        <div class="suggest__follow">
+            <span class="suggest__text"> Who to follow </span>
+        </div>
+
+        <div class="suggest__followme">
+            
+            <div class="who__picture">
+                <img src="https://res.cloudinary.com/firstproject/image/upload/c_scale,h_1036,q_48/v1656958708/IMG_20220701_150814_vwo6wg.jpg" 
+                alt="" 
+                class="who__img">
+            </div>
+
+            <div class="who__userinfo">
+
+                <div class="who__header">
+                    <div class="who__texts">
+                        <span class="who__firstname"> Alberto Rios </span>
+                        <span class="who__username"> @alberto </span>
+                    </div>
+                    <div class="who__cta">
+                        <button class="cta"> Follow </button>
+                    </div>
+                </div>
+
+                <div class="who__bio">
+                    <span class="bio"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+</ng-container>
+ -->

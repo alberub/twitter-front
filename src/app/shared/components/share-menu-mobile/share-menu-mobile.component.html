@@ -1,0 +1,65 @@
+<ng-container *ngIf="modalService.shareModal">
+
+    <aside class="sharemenu">
+
+        <div class="menu__share">
+
+            <div class="menu__send">
+
+                <div class="iconbox">
+
+                    <i class="icons-share bi bi-envelope"></i>
+
+                </div>
+
+                <span class="menu__text"> Send via Direct Message </span>
+
+            </div>
+
+            <div class="menu__bookmark" (click)="actionForBookmark()">
+
+                <div class="iconbox">
+
+                    <i class="icons-share bi bi-bookmark-plus"></i>
+
+                </div>
+
+                <span class="menu__text"> Bookmark </span>
+
+            </div>
+
+            <div class="menu__copy">
+
+                <div class="iconbox">
+
+                    <i class="icons-share bi bi-link-45deg"></i>
+
+                </div>
+
+                <span class="menu__text"> Copy link to Tweet </span>
+
+            </div>
+
+            <div class="menu__share-via">
+
+                <div class="iconbox">
+
+                    <i class="icons-share bi bi-share"></i>
+
+                </div>
+
+                <span class="menu__text"> Share Tweet via ... </span>
+
+            </div>
+
+            <div class="menu__cancel">
+
+                <a class="cancel__cta" (click)="closeModalShareMobile()"> Cancel </a>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+</ng-container>

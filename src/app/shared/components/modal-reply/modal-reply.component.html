@@ -1,0 +1,127 @@
+<div class="modal" [class.hidden]="modalService.modalReply" *ngIf="tweetToReply">
+    <!-- [style.height]="pageY" -->
+
+    <div class="modal__reply">
+
+        <div class="close__cta">
+
+            <div class="modal__iconbox">
+
+                <i class="bi bi-x-lg" (click)="closeModal()"></i>
+
+            </div>
+
+            <div class="modal__iconboxmobile">
+                
+                <i class="bi bi-arrow-left" (click)="closeModal()"></i>
+
+            </div>
+            
+        </div>
+        
+        <div class="modal__body">
+
+            <div class="user__picture">
+
+                <img [src]="tweetToReply.userId.img" 
+                     alt=""
+                     appWithoutImage 
+                     class="img__reply">
+
+                <div class="divider">
+                    <div class="reply__indicator"></div>
+                </div>
+
+            </div>
+            
+            <div class="modal__body--texts">
+
+                <div class="modal__data--user">
+                    
+                    <div class="modal__user">
+
+                        <p class="modal__user-name">{{ tweetToReply.userId.firstName }}</p>
+                        <span class="modal__user-username">@{{ tweetToReply.userId.username }}</span>
+                        <span class="modal__user-username"> · {{ tweetToReply.createdAt }} </span>
+
+                    </div>
+
+                    <div class="msg">
+
+                        <p class="tweet__msg"> {{ tweetToReply.message }} </p>
+
+                    </div>
+                </div>
+
+
+                <p class="tag">Replying to <span>@{{ tweetToReply.userId.username }}</span></p>
+
+            </div>
+
+        </div>
+
+        <div class="modal__reply-cta">
+
+            <img [src]="user.imagenUrl" alt="" class="img__reply">
+
+            <div class="reply">
+
+                <form [formGroup]="replyForm" (ngSubmit)="reply()">
+
+                    <div class="container__textArea">                        
+
+                        <textarea formControlName="message" 
+                            #textArea 
+                            id="textarea"
+                            placeholder="Tweet your reply"
+                            maxlength="280">
+                        
+                        </textarea>
+
+                        <ng-container *ngIf="imgTemp">
+
+                            <div class="modal__picture">
+
+                                <i class="bi bi-x-circle-fill" (click)="removeImgTemp()"></i>
+                                
+                                <img [src]="imgTemp" alt="" class="modal__img">
+
+                            </div>
+    
+                        </ng-container>
+
+                    </div>                                                            
+
+                    <div class="reply__actions">
+
+                        <div class="reply__icons">            
+
+                            <input type="file" 
+                                id="fileNew" 
+                                accept="image/*"
+                                (change)="changeImage( $any($event).target.files[0] )">
+
+                            <label for="fileNew" class="icon-bi bi bi-image"></label>
+
+                            <label class="icon-bi bi bi-filetype-gif"></label>
+                            <label class="icon-bi uil uil-analytics"></label>
+                            <label class="icon-bi bi bi-emoji-smile"></label>
+                            <label class="icon-bi bi bi-calendar-week"></label>
+                            <label class="icon-bi bi bi-geo-alt"></label>
+
+                        </div>
+
+                        <button type="submit" [disabled]="replyForm.invalid">Reply</button>
+
+                    </div>
+
+                
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

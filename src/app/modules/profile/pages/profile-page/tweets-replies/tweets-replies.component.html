@@ -1,0 +1,51 @@
+<ng-container *ngIf="activeSpinner">
+    <div class="spinner"></div>
+</ng-container>
+
+
+<ng-container *ngFor="let item of data">
+
+    <app-tweet-card [tweet]="item"></app-tweet-card>
+
+</ng-container>
+
+<ng-container *ngIf="data.length === 0">
+
+    <aside class="who">
+        <span class="who__follow"> Who to follow </span>
+    </aside>
+
+    <article class="who__card">
+
+        <div class="who__picture">
+            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8dXNlcnxlbnwwfHwwfHw%3D&w=1000&q=80" 
+                 alt="" 
+                 class="who__image">
+        </div>
+
+        <div class="who__info">
+            <div class="who__info-header">
+
+                <div class="who__texts">
+                    <span class="user__firstname"> Ernesto Rivas </span>
+                    <span class="user__username"> @ErnestoR </span>
+                </div>
+                <div class="who__cta">
+                    <button class="cta"> Follow </button>
+                </div>
+
+            </div>
+            <div class="who__bio">
+                <span class="bio">Aprendiendo #DesarrolloWeb #ingles #autodidacta, cada día algo nuevo. todo lo que público es para Documentar mis avances</span>
+            </div>
+        </div>
+
+
+
+    </article>
+
+</ng-container>
+
+<ng-container *ngIf="data.length > 0">
+    <div class="margin__mobile"></div>
+</ng-container>

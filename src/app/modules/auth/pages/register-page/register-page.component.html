@@ -1,0 +1,369 @@
+<section class="register">  
+
+    <div class="register__twitter">      
+
+        <div class="register__left">
+            
+            <img src="../../../../../assets/lohp_1302x955.png" alt="" class="register__background">
+
+            <i class="icon bi bi-twitter"></i>            
+            
+        </div>
+
+        <div class="register__right">
+
+            <div class="register__right-container">
+
+                <i class="bi bi-twitter"></i>
+
+                <div class="register__title">
+
+                    <h1 class="title"> Happening now </h1>
+
+                </div>
+
+                <div class="register__subtitle">
+
+                    <h2 class="subtitle"> Join Twitter today. </h2>
+
+                </div>
+
+                <div class="register__social">
+
+                    <div class="social__signButton">
+
+                        <div class="social__icon">
+
+                            <img src="../../../../../assets/icons8-logo-de-google-48.png" alt="" class="social">
+
+                        </div>
+
+                        <span class="social__text"> Sign up with google </span>
+
+                    </div>
+
+                </div>                
+
+                <div class="register__social">
+
+                    <div class="social__signButton">
+                        
+                        <i class="bi-apple"></i>                    
+
+                        <span class="social__text"> Sign up with Apple </span>
+
+                    </div>
+
+                </div> 
+
+                <!-- ==================================================================================== -->
+
+                <div class="register__option">
+
+                    <div class="divider">
+                        <div class="divider__border"></div>
+                    </div>
+
+                    <span class="divider__text"> or </span>
+
+                    <div class="divider">
+                        <div class="divider__border"></div>
+                    </div>
+
+                </div>
+
+                <!-- ==================================================================================== -->
+
+                <div class="" (click)="actionForModal()">
+
+                    <div class="social__signButton-phone">
+                                                              
+                        <span class="social__text-phone"> {{ 'Sign up with email' | slice:0:35 }} </span>
+
+                    </div>
+
+                </div> 
+
+                <!-- ==================================================================================== -->
+
+                <div class="terms">
+
+                    <span class="term__text">                        
+                        By signing up, you agree to the <span class="term__link"> Terms of service </span> and <span class="term__link"> Privacy Policy </span>, incluiding <span class="term__link"> Cookie use </span>.
+                    </span>
+
+                </div>
+
+                <!-- ==================================================================================== -->                
+
+                <div class="signin">
+
+                    <div class="signin__texts">
+
+                        <span class="sigin__text"> Already have an account? </span>
+
+                    </div>
+
+                    <div class="signin__link">
+
+                        <a class="sigin__cta" [routerLink]="['/auth/login']"> Sign in </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================================================================================================ -->
+    <!-- ================================================================================================ -->
+
+    <section class="modal" *ngIf="showModal">
+
+        <div class="modal__register">
+
+            <header class="modal__header">
+
+                <div class="iconbox-header" (click)="actionForModal()">
+
+                    <i class="bi bi-x"></i>
+
+                </div>
+
+            </header>
+
+            <form class="modal__body-register" 
+                  [formGroup]="registerForm"
+                  (ngSubmit)="createUser()">
+
+                <div class="modal__body">
+
+                    <div class="modal__info">
+
+                        <div class="modal__info-box">
+
+                            <h1 class="modal__create"> Create your account </h1>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal__input">
+
+                        <div class="modal__input-name">
+
+                            <div class="input">
+
+                                <input type="text" 
+                                        maxlength="50"                            
+                                        class="input__name"
+                                        autocomplete="off"
+                                        id="inputNameRegister"
+                                        formControlName="firstName"                                
+                                        placeholder=" ">
+                                
+                                <label for="inputNameRegister" 
+                                       class="labelForName">
+                                       <!-- [ngClass]="{'invalidField': registerForm.invalid && nameControl.touched }"  -->
+
+                                    Name 
+
+                                </label>
+
+                            </div>
+                            
+                            <div class="errors-container"
+                                 *ngIf="nameControl.invalid &&
+                                        ( nameControl.touched || nameControl.dirty )">
+
+                                <p class="error-msg" *ngIf="nameControl.hasError('required')"> 
+                                    What's your name? 
+                                </p>
+                                
+                                <p class="error-msg" *ngIf="nameControl.hasError('minLength')"> 
+                                    What's your name? 
+                                </p>   
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal__input">
+
+                        <div class="modal__input-name">
+
+                            <div class="input">
+
+                                <input type="text" 
+                                maxlength="50"                            
+                                class="input__name"
+                                autocomplete="off"
+                                id="inputUserNameRegister"
+                                formControlName="username"
+                                placeholder=" ">
+                                
+                                <label for="inputUserNameRegister" class="labelForName"> Username </label>
+
+                            </div>
+
+                            <div class="errors-container"
+                                 *ngIf="usernameControl.invalid &&
+                                        ( usernameControl.touched || usernameControl.dirty )">
+
+                                <p class="error-msg" *ngIf="usernameControl.hasError('required')"> 
+                                    Please enter a valid username. 
+                                </p>
+                                
+                                <p class="error-msg" 
+                                   *ngIf="usernameControl.hasError('availableValidator')"> 
+
+                                   Username has already been taken. Please choose another.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal__input">
+
+                        <div class="modal__input-name">
+
+                            <div class="input">
+
+                                <input type="text" 
+                                maxlength="50"                            
+                                class="input__name"
+                                autocomplete="off"
+                                id="inputEmailRegister"
+                                formControlName="email"
+                                placeholder=" ">
+                                
+                                <label for="inputEmailRegister" class="labelForName"> Email </label>
+
+                            </div>
+                            
+                            <div class="errors-container"
+                                 *ngIf="emailControl.invalid &&
+                                        ( emailControl.touched || emailControl.dirty )">
+
+                                <p class="error-msg" *ngIf="emailControl.hasError('required')"> 
+                                    This field is required. 
+                                </p>
+                                
+                                <p class="error-msg" *ngIf="emailControl.hasError('email')"> 
+                                    Please enter a valid email. 
+                                </p>
+                                
+                                <p class="error-msg" 
+                                   *ngIf="emailControl.hasError('availableValidator')"> 
+
+                                   Email has already been taken.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal__input">
+
+                        <div class="modal__input-name">
+
+                            <div class="input">
+
+                                <input type="text" 
+                                maxlength="50"
+                                autocomplete="off"             
+                                class="input__name"
+                                id="inputPass1Register"
+                                formControlName="password"                                
+                                placeholder=" ">
+                                
+                                <label for="inputPass1Register" class="labelForName"> Password </label>
+
+                            </div>
+                            
+                            <div class="errors-container"
+                                 *ngIf="passControl.invalid &&
+                                        ( passControl.touched || passControl.dirty )">
+
+                                <p class="error-msg" *ngIf="passControl.hasError('required')"> 
+                                    Enter a password. 
+                                </p>                        
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal__input">
+
+                        <div class="modal__input-name">
+
+                            <div class="input">
+
+                                <input type="text" 
+                                maxlength="50"
+                                autocomplete="off"                        
+                                class="input__name"
+                                id="inputPass2Register"
+                                formControlName="password2"
+                                placeholder=" ">
+                                
+                                <label for="inputPass2Register" class="labelForName"> Confirm password </label>
+
+                            </div>
+                            
+                            <div class="errors-container"
+                                 *ngIf="( passControl2.invalid || !passwordEquals() ) &&
+                                        ( passControl2.touched || passControl2.dirty )">
+
+                                <!-- <p class="error-msg" *ngIf="passControl2.hasError('required')"> 
+                                    Debe introducir una contrasena. 
+                                </p>   -->
+
+                                <p class="error-msg" 
+                                   *ngIf="
+                                          !passwordEquals()"> 
+                                    Passwords must be the same. 
+                                </p>                        
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="register__cta-">
+
+                    <button type="submit" 
+                            class="register-button"
+                            [disabled]="registerForm.invalid || !passwordEquals()"> 
+
+                        Register 
+
+                    </button>                
+
+                </div>
+
+                <aside class="space__form"></aside>
+
+            </form>
+
+        </div>        
+
+    </section>
+
+</section>

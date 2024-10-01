@@ -1,0 +1,416 @@
+.card__tweet{
+    position: relative;    
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 100%;
+    padding: 12px 16px;
+    border-bottom: .5px solid rgba(128, 128, 128, 0.1);    
+    cursor: pointer;    
+}
+
+.card__tweet-label{
+    display: flex;
+}
+
+.iconbox__retweet{
+    width: 48px;
+    height: 20px;
+    margin-right: 12px;
+    text-align: end;
+}
+
+.icon__retweet{
+    pointer-events: none;
+    font-size: 16px;
+    color: rgb(83, 100, 113);
+}
+
+.tweet__label{
+    font-size: var(--small-font);
+    color: var(--inactive-font);
+    font-weight: bold;
+}
+
+.card__tweet-body{
+    width: 100%;
+    display: flex;
+}
+
+.tweet__body{
+    position: relative;
+    width: 100%;
+}
+
+.profile__tweet--picture{
+    display: flex;
+    flex-direction: column;
+    margin-right: 12px;
+}
+
+/* .card__tweet:hover{
+    background: #F7F7F7;
+} */
+
+.post__img{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.tweet__header{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    height: 25px;        
+}
+
+.tweet__data{
+    display: flex;
+}
+
+.tweet__date{
+    font-size: var(--medium-font);
+    color: var(--inactive-font);
+    margin-left: 5px;
+}
+
+.tweet__name{
+    color: black;
+    font-size: var(--medium-font);
+    font-weight: bold;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.tweet__username{
+    font-size: var(--medium-font);
+    color: var(--inactive-font);
+    margin: 0 5px;
+}
+
+.tweet__username-mobile{
+    display: none;
+    font-size: var(--medium-font);
+    color: var(--inactive-font);
+    margin: 0 5px;
+}
+
+.tweet__options{
+    color: rgb(83, 100, 113);    
+}
+
+.reply__condition{
+    width: auto;
+    height: 20px;
+    margin-bottom: 2px;
+}
+
+.answer{
+    font-size: var(--medium-font);
+    color: var(--inactive-font);
+}
+
+.answer__to{
+    font-size: var(--medium-font);
+    color: var(--primary-color);
+}
+
+.tweet__message{  
+    display: block;        
+    font-size: var(--medium-font);    
+    color: var(--primary-font);
+    white-space: pre-line;    
+    word-wrap: break-word;    
+}
+
+.tweet__img{
+    max-width: 100%;
+    max-height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* ...................................................................................................... */
+/* POLL SELECTION */
+
+.poll__vote{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 112px;
+    margin: 0;
+}
+
+.select__option1{
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--primary-color);
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.select__option1:hover{
+    background: var(--primary-bg);
+}
+
+.select__text{
+    font-size: var(--medium-font);
+    color: var(--primary-color);
+    font-weight: 600;
+    line-height: 32px;
+}
+
+.select__option2{
+    width: 100%;
+    height: 32px;
+    border: 1px solid var(--primary-color);
+    border-radius: 16px;
+    text-align: center;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.select__option2:hover{
+    background: var(--primary-bg);
+}
+
+/* ...................................................................................................... */
+/* POLL RESULTS */
+
+.poll{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin: 0;
+    height: 112px;
+}
+
+.poll__option{
+    position: relative;
+    display: flex;
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.choice{
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    min-width: 1%;
+    height: 100%;
+    background: #CFD9DE;
+    border-radius: 4px 0 0 4px;
+    z-index: 0;
+}
+
+.choice__opt{
+    position: relative;
+    left: 12px;
+    font-size: 15px;
+    color: var(--other-font);
+    z-index: 1;
+}
+
+.choice__percent{
+    position: absolute;
+    font-size: 15px;
+    right: 0;
+    z-index: 1;
+}
+
+.percent{
+    border-radius: 4px;
+}
+
+.final__results{
+    border-radius: 4px;
+    background: #79C2F3;
+    color: #000;
+    font-size: bold;
+}
+
+.final__results-font{
+    font-size: var(--medium-font);
+    font-weight: bold;
+}
+
+.poll__option-2{
+    position: relative;
+    display: flex;
+    height: 32px;
+    line-height: 32px;
+    width: 100%;
+    border-radius: 4px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.count__poll{
+    height: 20px;
+    line-height: 20px;
+    margin-top: 12px;
+    font-size: var(--medium-font);
+    font-weight: 400;
+    color: var(--inactive-font);
+}
+
+.tweet__reactions{
+    width: 25%;
+}
+
+.tweet__reactions:hover{
+    color: #F91880;
+}
+
+.react:hover{
+    color: #F91880;
+}
+
+.icons__tweet{
+    display: flex;
+    height: 34px;
+    align-items: center;
+}
+
+.icon-bi{
+    display: inline-block;
+    font-size: 1rem;
+    text-decoration: none;
+    text-align: center;
+    color: rgb(83, 100, 113);
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    transition: 0.5s;
+}
+
+.icon-bi{
+    line-height: 30px;
+}
+
+.reactions{
+    font-size: 12px;
+    color: rgb(83, 100, 113);
+}
+
+.bi-three-dots:hover{
+    color: rgb(77, 176, 241);
+    background: #E1EEF6;    
+}
+
+.bi-chat:hover{
+    color: rgb(77, 176, 241);
+    background: #E1EEF6;
+}
+
+.bi-heart:hover{
+    color: rgb(249, 24, 128);
+    background: #F7E0EB;
+}
+
+.bi-heart-fill:hover{
+    color: rgb(249, 24, 128);
+    background: #F7E0EB;
+}
+
+
+.fa-retweet:hover{
+    color: rgb(41, 196, 144);
+    background: #DEF1EB;
+    text-decoration: none;
+}
+
+.bi-box-arrow-up:hover{
+    color: rgb(77, 176, 241);
+    background: #E1EEF6;
+}
+
+.liked{
+    color: #F91880;
+}
+
+.retweeted{
+    color: rgb(41, 196, 144);
+}
+
+.false{
+    color: rgb(83, 100, 113, .8);
+}
+
+.backgroundTweet{
+    background: #000;
+}
+
+/* =============================================================================== */
+/* =============================================================================== */
+.mobile__end{
+    display: none;
+}
+
+.bi-share{
+    display: none;
+}
+
+@media screen and ( max-width: 500px ) {
+
+    .card__tweet:hover{
+        background: none;
+    }
+
+    .icons__tweet{
+        width: 100;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .tweet__reactions{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .hidemobile{
+        display: none;
+    }
+
+    .mobile__start{
+        width: 25%;
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .mobile__end{
+        width: 25%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .bi-share{
+        display: block;
+    }
+
+    .tweet__username{
+        display: none;
+    }
+
+    .tweet__username-mobile{
+        display: block;
+    }
+
+    .icon-bi:hover{
+        background: none;
+    }
+
+}

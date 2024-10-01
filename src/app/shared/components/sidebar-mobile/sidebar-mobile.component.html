@@ -1,0 +1,231 @@
+<ng-container *ngIf="!modalService.modalSidebarMobile">
+
+    <div class="mobilesidebar">
+
+        <div class="mobile__sidebar animate__animated animate__slideInLeft">
+
+            <div class="mobile__header">
+
+                <span class="header__text"> Account info </span>
+
+                <div class="iconbox__close-mobile-sidebar">
+
+                    <i class="close-mobile-sidebar bi bi-x" (click)="actionSidebarMobile()"></i>
+
+                </div>
+
+            </div>
+
+            <div class="mobile__sidebar-body">
+
+                <div class="mobile__userinfo">
+
+                    <div class="user__picture">
+    
+                        <img [src]="user.imagenUrl" alt="" class="user__img">
+
+                        <div class="iconbox__add">
+
+                            <i class="add-mobile-sidebar bi bi-plus-circle"></i>
+
+                        </div>
+    
+                    </div>
+    
+                    <div class="user__names" [routerLink]="['/profile']">
+    
+                        <span class="user__firstname"> {{ user.firstName }} </span>
+                        <span class="user__username"> @{{ user.username }} </span>
+    
+                    </div>
+    
+                    <div class="user__follows">
+    
+                        <span class="user__follow"> <span class="user__follow-length"> {{ user.followings!.length }} </span> Following </span>
+                        <span class="user__follow"> <span class="user__follow-length"> {{ user.followers!.length }} </span> Follower </span>
+    
+                    </div>
+    
+                </div>
+
+                <div class="mobile__links">
+
+                    <div class="mobile__menu-link" [routerLink]="['/profile']">
+
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-person"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Profile </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-file-text"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Lists </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-chat-text"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Topics </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link" [routerLink]="['/bookmarks']">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-bookmark"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Bookmarks </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-lightning"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Moments </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-postcard"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Newsletters </span>
+    
+                    </div>
+    
+                    <div class="divisor"></div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="uil uil-rocket"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Twitter for Proessionals </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+                        
+                            <i class="bi bi-arrow-up-right-square"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Twitter Ads </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="uil uil-analytics"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Analytics </span>
+    
+                    </div>
+    
+                    <div class="divisor"></div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-gear"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Settings and privacy </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-question-circle"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Help center </span>
+    
+                    </div>
+    
+                    <div class="divisor"></div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class="bi bi-brush"></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Display </span>
+    
+                    </div>
+    
+                    <div class="mobile__menu-link">
+    
+                        <div class="iconbox__menu">
+    
+                            <i class='bx bx-body'></i>
+    
+                        </div>
+    
+                        <span class="link__name"> Keyboard shortcuts </span>
+    
+                    </div>
+    
+                    <div class="divisor"></div>
+    
+                    <div class="mobile__menu-link" (click)="logout()">
+    
+                        <span class="link__name"> Log out </span>
+    
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</ng-container>

@@ -1,0 +1,262 @@
+<section class="sidebar" id="sidebar">
+
+    <div class="sidebar__menu">
+
+        <div class="sidebar__links">
+
+            <div class="logo">
+                <a href=""><i class="logo__twitter bi bi-twitter"></i></a>
+            </div>
+            
+            <div class="menu__route" *ngFor="let item of mainMenu.defaultOptions" >
+         
+                <a class="menu__links" 
+                   #rla="routerLinkActive" 
+                   [routerLinkActiveOptions]="{ exact: true }" 
+                   [routerLinkActive]="'active'"
+                   [routerLink]="item.router">
+
+                    <ng-container *ngIf="item.name === 'More' && !rla.isActive">
+
+                        <div class="preferences__menu" (click)="sayHi()"></div>
+
+                    </ng-container>
+                
+                    <ng-container *ngIf="item.name === 'Messages' && 
+                                          !rla.isActive && 
+                                          counterMessages.length > 0">
+
+                        <div class="icon__newMessage"> <span class="counter"> {{ counterMessages.length }} </span> </div>
+
+                    </ng-container>
+                    <!-- ================================ -->                    
+                    <ng-container *ngIf="item.name === 'Notifications' && 
+                                          !rla.isActive &&
+                                          counterNotifications !== 0">
+
+                        <div class="icon__newMessage"> <span class="counter"> {{ counterNotifications }} </span> </div>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="!rla.isActive">                
+
+                        <i class="icon__active" [ngClass]="[ item.icon ]"></i>
+
+                    </ng-container>
+                
+                    <ng-container *ngIf="rla.isActive">                
+
+                        <i class="icon__deactive" [ngClass]="[ item.icon__active ]"></i>
+
+                    </ng-container>
+                
+                    <a class="menu__link"> {{ item.name }} </a>
+                
+                </a>
+
+            </div>
+            
+    
+            <div class="tweet" (click)="openModalnew()">
+
+                <a class="create__tweet">
+                   Tweet
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="sidebar__logout">            
+
+            <div class="sidebar__profile" (click)="openModalOut()">
+
+                <img [src]="user.img" appWithoutImage class="profile__img">
+
+                <div class="profile__texts">
+                    <p class="profile__name">{{ user.firstName }}</p>
+                    <p class="profile__username">@{{ user.username }}</p>
+                </div>
+
+                <div class="profile__menu">
+                    <a><i class="bi-dot bi-three-dots"></i></a>
+                </div>
+
+            </div>
+
+        </div>
+
+        
+
+    </div>
+
+    <ng-container *ngIf="modalService.modalOut">        
+
+        <section class="modal-card" id="modalcard">
+        
+            <div class="modal__sidebar">
+        
+                <div class="modal__user">
+        
+                    <div class="modal__picture">
+        
+                        <img class="modal__img" [src]="user.img" appWithoutImage alt="">
+        
+                    </div>
+        
+                    <div class="modal__texts">
+        
+                        <div class="modal__username">
+        
+                            <span class="firstName"> {{ user.firstName }} </span>
+                            <span class="username"> @{{ user.username }} </span>
+        
+                        </div>
+        
+                        <div class="iconbox">
+        
+                            <i class="bi bi-check2"></i>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+                <div class="modal__logout" (click)="logout()">
+        
+                    <span class="logout"> Log out @{{ user.username }}</span>
+        
+                </div>
+        
+            </div>
+        
+        </section>
+    
+    </ng-container>
+
+</section>
+
+<section class="sidebar__tablet" id="sidebartablet">
+
+    <div class="sidebar__menu-tablet">
+
+        <div class="sidebar__links">
+
+            <div class="logo">
+                <a href="/"><i class="logo__twitter bi bi-twitter"></i></a>
+            </div>
+            
+            <div class="menu__route" *ngFor="let item of mainMenu.defaultOptions" >
+         
+                <div class="menu__links" 
+                     #rla="routerLinkActive" 
+                     [routerLinkActiveOptions]="{ exact: true }" 
+                     [routerLinkActive]="'active'"
+                     [routerLink]="item.router">
+                
+
+                     <ng-container *ngIf="item.name === 'Messages' && 
+                                          !rla.isActive && 
+                                          counterMessages.length > 0">
+
+                        <div class="icon__newMessage"> <span class="counter"> {{ counterMessages.length }} </span> </div>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="item.name === 'Notifications' && 
+                                          !rla.isActive &&
+                                          counterNotifications !== 0">
+
+                        <div class="icon__newMessage"> <span class="counter"> {{ counterNotifications }} </span> </div>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="!rla.isActive">                
+
+                        <i class="icon__active" [ngClass]="[ item.icon ]"></i>
+
+                    </ng-container>
+                
+                    <ng-container *ngIf="rla.isActive">                
+
+                        <i class="icon__deactive" [ngClass]="[ item.icon__active ]"></i>
+
+                    </ng-container>
+                                    
+                </div>
+
+            </div>
+            
+    
+            <div class="tweet-tablet" (click)="openModalnew()">
+
+                <!-- <a class="create__tweet-tablet">
+                   Tweet
+                </a> -->
+
+            </div>
+
+        </div>
+
+        <div class="sidebar__logout">
+
+            <div class="sidebar__profile" (click)="openModalOut()">
+
+                <img [src]="user.imagenUrl" class="profile__img">                
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <ng-container *ngIf="modalService.modalOut">        
+
+        <section class="modal-card" id="modalcard">
+        
+            <div class="modal__sidebar">
+        
+                <div class="modal__user">
+        
+                    <div class="modal__picture">
+        
+                        <img class="modal__img" [src]="user.imagenUrl" alt="">
+        
+                    </div>
+        
+                    <div class="modal__texts">
+        
+                        <div class="modal__username">
+        
+                            <span class="firstName"> {{ user.firstName }} </span>
+                            <span class="username"> @{{ user.username }} </span>
+        
+                        </div>
+        
+                        <div class="iconbox">
+        
+                            <i class="bi bi-check2"></i>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+                <div class="modal__logout" (click)="logout()">
+        
+                    <span class="logout"> Log out @{{ user.username }}</span>
+        
+                </div>
+        
+            </div>
+        
+        </section>
+    
+    </ng-container>
+    
+</section>
+
+
+

@@ -1,0 +1,41 @@
+<ng-container>
+
+    <article class="follows__card">
+
+        <div class="follow__picture" [routerLink]="['/', user.username]">
+            <img [src]="user.img! | imagen:'users'" alt="" class="follow__img">
+        </div>
+
+        <div class="follow__data">
+
+            <div class="follow__header">
+
+                <div class="follow__names">
+                    <span [routerLink]="['/', user.username]" class="follow__name"> {{ user.firstName }} {{ user.lastName }} </span>
+                    <span [routerLink]="['/', user.username]" class="follow__username"> @{{ user.username }} </span>
+                </div>
+
+                <!-- <ng-container *ngIf="iAmFollow">        
+                    <div class="follow__cta">
+                        <button class="cta" (click)="actionToFollow()"> Following </button>
+                    </div>            
+                </ng-container>
+
+                <ng-container *ngIf="!iAmFollow">        
+                    <div class="follow__cta">
+                        <button class="cta" (click)="actionToFollow()"> Follow </button>
+                    </div>            
+                </ng-container> -->
+
+            </div>
+
+            <div class="follow__bio" [routerLink]="['/', user.username]">
+                <span class="bio"> {{ user.bio }} </span>
+            </div>
+
+        </div>
+
+    </article>
+
+</ng-container>
+

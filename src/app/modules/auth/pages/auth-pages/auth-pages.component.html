@@ -1,0 +1,312 @@
+<article class="login">
+
+    <ng-container *ngIf="!isFormEmpty">
+
+        <div class="modal__login">
+
+            <header class="header__login">
+
+                <div class="iconbox__close">
+
+                    <i class="bi bi-x" [routerLink]="['/auth/register']"></i>
+
+                </div>
+
+                <div class="iconbox__twitter">
+
+                    <i class="bi bi-twitter"></i>
+
+                </div>
+
+            </header>
+
+            <!-- ================================================================================== -->
+
+            <form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
+
+                <div class="form__signin">
+    
+                    <div class="form__title">
+    
+                        <div class="text">
+    
+                            <h1 class="title"> Enter your password </h1>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="signin__options">
+    
+                        <div class="input-disable" [ngClass]="{'border-blue': border }">                        
+    
+                            <input type="text" 
+                                   formControlName="email"
+                                   id="inputName" 
+                                   class="input__signin-disable"
+                                   autocomplete="off"
+                                   placeholder=" "
+                                   readonly>
+    
+                            <label for="inputName" 
+                                class="label__input-disable"> {{ 'Username' }} 
+                                                           
+                            </label>
+    
+                        </div>
+    
+    
+                    </div>
+    
+                    <div class="signin__options-pass">
+    
+                        <div class="input" [ngClass]="{'border-blue': border }">                        
+    
+                            <input type="password" 
+                                   formControlName="password"
+                                   id="inputPass" 
+                                   class="input__signin"
+                                   autocomplete="off"
+                                   placeholder=" ">
+
+                                <!-- (click)="setBorder( true )" -->
+    
+                            <label for="inputPass" 
+                                class="label__input-pass"> {{ 'Password' }} 
+                                                           
+                            </label>
+    
+                            <div class="iconbox__show">
+    
+                                <ng-container *ngIf="!show">
+    
+                                    <i class="bi bi-eye" (click)="showPass( true )"></i>
+    
+                                </ng-container>
+                                
+                                <ng-container *ngIf="show">
+    
+                                    <i class="bi bi-eye-slash" (click)="showPass( false )"></i>
+    
+                                </ng-container>
+    
+                            </div>                        
+    
+                        </div>
+    
+    
+                    </div>
+    
+                    <div class="forgot__pass">
+    
+                        <span class="forgot__cta"> Forgot password? </span>
+    
+                    </div>
+    
+                </div>
+
+                <div class="form__bottom">
+
+                    <div class="form__submit">
+
+                        <div class="form__cta">
+
+                            <button type="submit" 
+                                    class="form__bnt"
+                                    [disabled]="loginForm.invalid"> 
+                                    
+                                Log in 
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="create__acount">
+
+                        <span class="redirect__ask"> Don't have an account? <span class="link"> Sign up </span> </span>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+
+            <!-- ================================================================================== -->
+
+        </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="isFormEmpty">        
+        
+        <div class="modal__login">
+
+            <header class="header__login">
+
+                <div class="iconbox__close">
+
+                    <i class="bi bi-x" [routerLink]="['/auth/register']"></i>
+
+                </div>
+
+                <div class="iconbox__twitter">
+
+                    <i class="bi bi-twitter"></i>
+
+                </div>
+
+            </header>
+
+            <div class="modal__body-section">
+
+                <div class="modal__body">
+
+                    <div class="modal__title">
+
+                        <h1 class="title"> Sign in to Twitter </h1>
+
+                    </div>
+
+                    <div class="modal__signin">
+
+                        <div class="modal__signin-social">    
+
+                            <div class="social__picture">
+                                
+                                <img src="../../../../../assets/icons8-logo-de-google-48.png" alt="" class="social__img">
+                                
+                            </div>
+                            
+                            <a class="google__cta"> Continue with Google </a>                
+                            
+                        </div>
+
+                    </div>
+
+                    <div class="modal__signin">
+
+                        <div class="modal__signin-social">    
+                                                
+                            <div class="social__picture">
+                                                            
+                                <i class="social__img bi bi-apple"></i>
+                                
+                            </div>
+                            
+                            <a class="apple__cta"> Continue with Apple </a>                
+                            
+                        </div>
+
+                    </div>
+
+    <!-- ================================================================================================== -->
+
+                    <div class="signin__otheroption">
+
+                        <ng-container *ngIf="showUserTest">
+                        
+                            <aside class="test__user">
+                                <div class="test__header">
+                                    <span class="test"> Test user </span>
+                                    <i class="bi bi-x-circle" (click)="actionForUserTest()"></i>
+                                </div>
+                                <span class="test__username"> email: bryan@gmail.com </span>
+                                <span class="test__pass"> password: 123 </span>
+                            </aside>
+
+                        </ng-container>
+
+                        <div class="divider">
+
+                            <div class="line"></div>
+
+                        </div>
+
+                        <div class="letter__divider">
+
+                            <span class="letter"> or </span>
+
+                        </div>
+
+                        <div class="divider">
+
+                            <div class="line"></div>
+
+                        </div>
+
+                    </div>
+
+    <!-- ================================================================================================== -->
+    <!-- ================================================================================================== -->
+
+                    <div class="signin__options">                        
+
+                        <div class="input" [ngClass]="{'border-blue': border }">                        
+
+                            <input type="text" 
+                                   id="otheropt"
+                                   #findUser 
+                                   class="input__signin"
+                                   autocomplete="off"
+                                   placeholder=" "
+                                   (click)="setBorder( true )">
+
+                            <label for="otheropt" 
+                                class="label__input"> {{ 'Continue with email...' | slice:0:35 }} 
+                                                        <!-- {{ ('Teléfono, correo electrónico o nombre de usuario.length > 35')? '...' : '' }}     -->
+                            </label>
+
+                        </div>
+
+
+                    </div>
+
+    <!-- ================================================================================================== -->
+
+                    <div class="find__button">
+
+                        <a class="find__cta" (click)="setData( findUser.value )"> Next </a>
+
+                    </div>
+
+    <!-- ================================================================================================== -->
+
+                    <div class="forget__button">
+
+                        <a class="forget__cta"> Forgot password? </a>
+
+                    </div>
+
+    <!-- ================================================================================================== -->
+
+                    <div class="redirect__register">
+
+                        <div class="redirect__texts">
+
+                            <span class="redirect__ask"> Don't have an account? <span class="link link-register" [routerLink]="['/auth/register']"> Sign up </span> </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </ng-container>
+
+</article>
+
+<ng-container *ngIf="showErrorMessage">
+    <aside class="alert">
+        <div class="alert__tag">
+            <span class="alert__text"> {{ alertText }} </span>
+        </div>
+    </aside>
+</ng-container>
+<!-- <app-alert></app-alert> -->

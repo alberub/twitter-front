@@ -1,0 +1,34 @@
+.no__media{        
+    height: auto;
+    padding: 0 32px;
+    margin: 32px 99px;    
+}
+
+.no__media-img{
+    width: 100%;
+    height: auto;
+}
+
+.noLikesh1{
+    font-size: 31px;
+    color: black;
+}
+
+.noLikesh2{
+    font-size: 13px;
+    color: #536471;
+}
+
+@media screen and ( max-width: 700px ) {
+    .no__media{                
+        padding: 0 32px;
+        margin: 32px 32px;    
+    }
+}
+
+@media screen and ( max-width: 500px ) {
+    .space__bottom-likes{
+        width: 100vw;
+        height: 53px;
+    }
+}

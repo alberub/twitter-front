@@ -1,0 +1,306 @@
+<section class="notif">
+
+    <article class="notif__left">
+
+        <header class="notif__header">
+
+            <span class="notif__title"> Notifications </span>
+
+            <div class="notif__boxicon">
+
+                <i class="bi bi-gear"></i>
+
+            </div>
+
+        </header>
+
+        <div class="notif__tabs">
+
+            <div class="notif__select" (click)="toggleSections('all')">
+
+                <a class="all"
+                   [ngClass]="{'route__underline': title === 'all' }"> All </a>
+
+            </div>
+
+            <div class="notif__select" (click)="toggleSections('mentions')">
+
+                <a class="mentions"
+                   [ngClass]="{'route__underline': title === 'mentions' }"> Mentions </a>
+
+            </div>
+
+        </div>
+
+        <!-- ================================ CARD NOTIF SECTION ============================================= -->
+
+        <ng-container *ngIf="activeSpinner">
+
+            <div class="spinner"></div>
+
+        </ng-container>        
+
+        <ng-container *ngIf="showAll">       
+            
+            <ng-container *ngFor="let notification of notifications">
+                
+                <ng-container *ngIf="notifications.length > 0">
+
+                    <div class="notif__cards" 
+                         [routerLink]="['/', notification.tweet.userId.username,'status',notification.tweet._id ]">                         
+    
+                        <div class="card__icon">
+                            
+                            <i [ngClass]="{'fa-solid fa-retweet': notification.reaction === 'Retweeted',
+                                        'bi bi-heart-fill': notification.reaction === 'liked' }">
+                            </i>                        
+    
+                        </div>
+    
+                        <div class="card__user">
+    
+                            <div class="card__picture">
+    
+                                <img [src]="notification.userId.img! | imagen:'users'"   
+                                     alt=""
+                                     class="card__img">
+    
+                            </div>
+    
+                            <div class="card__texts">
+    
+                                <span class="card__username" 
+                                    [routerLink]="['/', notification.userId.username ]"> 
+                                    {{ notification.userId.firstName }} 
+                                </span>
+                                <span class="card__info"> {{ notification.reaction }} your Tweet </span>
+    
+                            </div>
+    
+                            <div class="card__texts-reaction">
+    
+                                <span class="card__info"> 
+                                    {{ notification.tweet.message | slice:0:120 }}
+                                    {{ notification.tweet.message.length > 119 ? '...' : '' }} 
+
+                                </span>                            
+    
+                            </div>
+    
+                        </div>
+    
+                    </div>
+
+                </ng-container>                        
+            
+            </ng-container>
+
+            <ng-container *ngIf="notifications.length === 0 && !activeSpinner ">        
+
+                <div class="notif__mentions">
+    
+                    <div class="notif__texts">
+    
+                        <span class="no__mention-title"> 
+                            Nothing to see here — yet 
+                        </span>
+                        <span class="no__mention-subtitle"> 
+                            From likes to Retweets and a whole lot more, this is where all the action happens. 
+                        </span>
+    
+                    </div>
+    
+                </div>
+            
+            </ng-container> 
+        
+        </ng-container>
+
+        <ng-container *ngIf="!showAll">        
+
+            <div class="notif__mentions">
+
+                <div class="notif__texts">
+
+                    <span class="no__mention-title"> Nothing to see here — yet </span>
+                    <span class="no__mention-subtitle"> When someone mentions you, you’ll find it here. </span>
+
+                </div>
+
+            </div>
+        
+        </ng-container>
+
+    </article>
+
+    <aside class="notif__right">
+
+        <div class="profile__search">            
+
+            <input type="text" 
+                   placeholder="Search Twitter"
+                   class="input__search">
+
+            <i class="bi bi-search"></i>
+
+        </div>
+
+        <aside class="whats__happening">
+
+            <span class="whats__title"> Whats's happening </span>
+
+            <article class="card__new" *ngFor="let item of newService.newScienceResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Science · 3 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> Tesla Motors </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <aside class="trending">
+
+                <div class="trending__theme">
+
+                    <span class="trending__theme-header"> Trending in Mexico </span>
+
+                    <i class="bi bi-three-dots"></i>
+
+                </div>
+
+                <div class="trending__title">
+
+                    <span class="trending__span"> FinTech </span>
+
+                </div>
+
+                <div class="trending__footer">
+
+                    <span class="footer__span"> Trending with 
+
+                        <a href="" class="trending__link"> Technology </a> 
+                        
+                    </span>
+
+                </div>
+
+            </aside>
+
+            <article class="card__new" *ngFor="let item of newService.newTechnologyResult">
+                
+                <img [src]="item.urlToImage" alt="" class="new__img">
+
+                <div class="card__texts">
+
+                    <div class="card__theme">
+
+                        <span class="card__theme-header"> Technology · 2 hours ago </span>
+
+                        <span class="card__title">{{ item.title }}</span>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+        </aside> 
+
+        <aside class="who__follow">
+
+            <span class="who__like">You might like</span>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">
+
+                    <img src="https://www.biografiasyvidas.com/monografia/newton/fotos/newton_joven.jpg" 
+                    alt=""
+                    class="recomendation__img">
+                    
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Bryan Rios </span>
+                        <span class="recomendation__username"> @Bryan </span>
+
+                    </div>
+
+                    <a href="#" class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <div class="like__recomendation">
+
+                <div class="recomendation__picture">                    
+                    <img src="https://www.cladera.org/biografias/pics/cientificos/bohr.jpg" 
+                    alt=""
+                    class="recomendation__img">
+
+                </div>
+
+                <div class="recomendation__texts">
+
+                    <div class="recomendation__names">
+
+                        <span class="recomendation__name"> Alberto Uribe </span>
+                        <span class="recomendation__username"> @AlUribe </span>
+
+                    </div>
+
+                    <a href="#" class="recomendation__cta"> Follow </a>
+
+                </div>
+
+            </div>
+
+            <span class="show"> Show more </span>
+
+        </aside>        
+
+    </aside>
+
+
+</section>

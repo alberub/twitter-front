@@ -1,0 +1,151 @@
+<section class="modal" [class.hidden]="modalService.modalProfile">
+
+    <form [formGroup]="modalForm" (ngSubmit)="updateProfile()">
+
+        <div class="modal__profile">
+            
+            <div class="modal__header">
+                
+                <div class="iconbox__close">
+                    
+                    <a class="fa-solid fa-xmark" (click)="closeModal()"></a>
+
+                </div>
+
+                <a (click)="closeModal()" class="mobilarrow bi bi-arrow-left"></a>
+                
+                <h1 class="edit">Edit Profile</h1>
+                
+                <button class="modal__header--cta" type="submit" (click)="updateImage()">Save</button>
+                
+            </div>
+            
+            <div class="portrait">
+
+                <div class="portrait__labels">
+
+                    <label for="filePort" class="bi bi-camera"></label>
+
+                    <i class="bi bi-x-lg"></i>
+
+                </div>
+
+                <input type="file" id="filePort" accept="image/*" (change)="changeImgPort( $any($event).target.files[0] )">
+
+                <img *ngIf="imgTempPort" [src]="imgTempPort" class="imgPort__picture">
+
+                <img *ngIf="!imgTempPort" [src]="user.imagenPortada" class="imgPort__picture">
+
+            </div>
+
+            <div class="profile">
+
+                <input type="file" id="file" accept="image/*" (change)="changeImg( $any($event).target.files[0] )">
+                <label for="file" class="camera-profile bi bi-camera"></label>
+                
+                <img *ngIf="imgTemp" [src]="imgTemp" alt="" class="imgProfile">
+                <img *ngIf="!imgTemp" [src]="user.img! | imagen:'users'" class="imgProfile">
+                
+            </div>
+            
+            <div class="modal__input--first">
+                
+                <div class="myModal">
+                    
+                    <label for="name" class="modal__label">
+                        <span [ngClass]="{'is-active': modalForm.get('name')?.value.length > 0}" 
+                              class="miSpan" 
+                              id="spanName">
+                              Name
+                        </span>
+                    </label>
+                    
+                    <div class="modal__input--name">
+                        <input id="miName"
+                               class="input__form" 
+                               type="text"
+                               autocomplete="off" 
+                               formControlName="firstName">
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            <!-- BIO -->
+
+            <div class="modal__input--bio">
+                
+                <div class="myModal">
+                    
+                    <label for="name" class="modal__label">
+                        <span [ngClass]="{'is-active': modalForm.get('name')?.value.length > 0}" class="miSpan" id="spanName">Bio</span>
+                    </label>
+                    
+                    <div class="modal__input--name">
+
+                        <textarea class="textArea" 
+                                  id="miName" 
+                                  type="text" 
+                                  formControlName="bio">
+
+                                  Bio
+                        </textarea>
+
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            <div class="modal__input">
+                
+                <div class="myModal">
+                    
+                    <label for="name" class="modal__label">
+                        <span [ngClass]="{'is-active': modalForm.get('name')?.value.length > 0}" class="miSpan" id="spanName">Location</span>
+                    </label>
+                    
+                    <div class="modal__input--name">
+                        <input id="miName" 
+                               type="text" 
+                               formControlName="location"
+                               class="input__modal">
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            <div class="modal__input">
+                
+                <div class="myModal">
+                    
+                    <label for="name" class="modal__label">
+                        <span [ngClass]="{'is-active': modalForm.get('name')?.value.length > 0}" class="miSpan" id="spanName">Website</span>
+                    </label>
+                    
+                    <div class="modal__input--name">
+                        <input id="miName" 
+                               type="text" 
+                               formControlName="website"
+                               class="input__modal">
+                    </div>
+                    
+                </div>
+                
+            </div>
+
+            <div class="divisor"></div>
+            
+        </div>
+
+    </form>
+        
+</section>
+
+<div *ngIf="imgTemp">
+
+    <app-modal-edit [imgTemp]="imgTemp"></app-modal-edit>
+
+</div>

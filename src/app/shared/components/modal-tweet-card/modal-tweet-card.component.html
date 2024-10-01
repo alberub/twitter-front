@@ -1,0 +1,379 @@
+<ng-container *ngIf="modalService.modalForTweetCard && tweet">
+
+    <div class="modal" id="mymodal">
+
+        <div class="modal__tweetcard" [style.left]="clientX" [style.top]="clientY">
+
+            <ng-container *ngIf="tweet.userId._id !== uid">
+
+                <div class="modal__section">                    
+
+                    <div class="modal__option disabled__function" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-emoji-frown"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Not interested in this Tweet </span>
+
+                    </div>
+
+                    <div class="modal__option" (click)="actionForFollow( tweet )">
+
+                        <ng-container *ngIf="amIaFollower">
+
+                            <div class="iconbox">
+
+                                <i class="icon bi bi-person-x"></i>
+
+                            </div>
+
+
+                            <span class="modal__text"> Unfollow @{{ tweet.userId.username }} </span>
+
+                        </ng-container>
+
+                        <ng-container *ngIf="!amIaFollower">
+
+                            <div class="iconbox">
+
+                                <i class="icon bi bi-person-plus"></i>
+
+                            </div>
+
+                            <span class="modal__text"> Follow @{{ tweet.userId.username }} </span>
+
+                        </ng-container>
+                        
+
+                    </div>
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-volume-mute"></i>                            
+
+                        </div>
+
+                        <span class="modal__text"> Mute @{{ tweet.userId.username }} </span>
+
+                    </div>
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="icon uil uil-ban"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Block @{{ tweet.userId.username }} </span>
+
+                    </div>
+                    
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-flag"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Report Tweet </span>
+
+                    </div>
+
+                </div>
+
+            </ng-container>
+
+            <ng-container *ngIf="tweet.userId._id === uid">
+
+                <div class="modal__section">                                    
+                        
+                    <div class="modal__option" (click)="deleteTweet( tweet )">
+                        
+                        <div class="iconbox">
+                            
+                            <i class="icon bi bi-trash3"></i>
+                            
+                        </div>
+                        
+                        <span class="modal__text-option"> Delete </span>
+                        
+                    </div>                    
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="bi bi-pin"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Pin to your profile </span>
+
+                    </div>
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="bi bi-chat-text"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Change who can reply </span>
+
+                    </div>
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="bi bi-code-slash"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Embed Tweet </span>
+
+                    </div>                                        
+
+                </div>
+
+            </ng-container>
+
+        </div>
+
+    </div>
+
+<!-- ================================================================ -->
+<!-- ================================================================ -->
+
+    <div class="modal-mobile">
+
+        <ng-container *ngIf="tweet.userId._id !== uid">
+
+            <div class="modal__section-mobile">
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="icon bi bi-emoji-frown"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Not interested in this Tweet </span>
+
+                </div>
+
+                <div class="modal__option" (click)="actionForFollow( tweet )">
+
+                    <div class="iconbox">
+
+                        <i class="icon bi bi-person-x"></i>
+
+                    </div>
+
+                    <ng-container *ngIf="amIaFollower">
+
+                        <span class="modal__text"> Unfollow @{{ tweet.userId.username }} </span>
+
+                    </ng-container>
+
+                    <ng-container *ngIf="!amIaFollower">
+
+                        <span class="modal__text"> Follow @{{ tweet.userId.username }} </span>
+
+                    </ng-container>
+                    
+
+                </div>
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="icon bi bi-volume-mute"></i>                            
+
+                    </div>
+
+                    <span class="modal__text"> Mute @{{ tweet.userId.username }} </span>
+
+                </div>
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="icon uil uil-ban"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Block @{{ tweet.userId.username }} </span>
+
+                </div>
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="icon bi bi-flag"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Report Tweet </span>
+
+                </div>
+
+                <div class="modal__cancel">
+
+                    <a class="cancel__cta" (click)="closeModal()"> Cancel </a>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+
+        <ng-container *ngIf="tweet.userId._id === uid">
+
+            <div class="modal__section-mobile">
+
+                <div class="modal__option" (click)="deleteTweet( tweet )">
+                        
+                    <div class="iconbox">
+                        
+                        <i class="icon bi bi-trash3"></i>
+                        
+                    </div>
+                    
+                    <span class="modal__text-option"> Delete </span>
+                    
+                </div>                    
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="bi bi-pin"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Pin to your profile </span>
+
+                </div>
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="bi bi-chat-text"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Change who can reply </span>
+
+                </div>
+
+                <div class="modal__option" (click)="click()">
+
+                    <div class="iconbox">
+
+                        <i class="bi bi-code-slash"></i>
+
+                    </div>
+
+                    <span class="modal__text"> Embed Tweet </span>
+
+                </div>                                          
+
+                <div class="modal__cancel">
+
+                    <a class="cancel__cta" (click)="closeModal()"> Cancel </a>
+
+                </div>
+
+            </div>
+
+        </ng-container>
+
+    </div>
+
+</ng-container>
+
+<ng-container *ngIf="modalService.modalForTweetCardShare && tweet">
+
+    <div class="modal" id="myModalShare">
+
+        <div class="modal__tweetcard" [style.left]="clientX" [style.top]="clientY">
+
+            <ng-container>
+
+                <div class="modal__section">                    
+
+                    <div class="modal__option" (click)="copyLinkTweet()">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-link-45deg"></i>
+
+                        </div>
+
+                        <span class="modal__text"> Copy link to Tweet </span>
+
+                    </div>
+
+                    <div class="modal__option disabled__function" (click)="actionForFollow( tweet )">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-box-arrow-up"></i>                            
+
+                        </div>
+
+                        <span class="modal__text"> Share Tweet via … </span>                                            
+
+                    </div>
+
+                    <div class="modal__option" (click)="click()">
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-envelope"></i>                            
+
+                        </div>
+
+                        <span class="modal__text"> Send via Direct Message </span>
+
+                    </div>
+
+                    <div class="modal__option" (click)="actionForBookmark( tweet._id )">                        
+
+                        <div class="iconbox">
+
+                            <i class="icon bi bi-bookmark-plus"></i>
+
+                        </div>
+
+
+                        <span class="modal__text"> Bookmark </span>                                                                   
+
+                    </div>                                    
+
+                </div>
+
+            </ng-container>            
+
+        </div>
+
+    </div>
+
+</ng-container>
+
+
+
